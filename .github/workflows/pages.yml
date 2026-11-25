@@ -1,22 +1,43 @@
-name: Publicar no GitHub Pages
+name: Validar e publicar
 
+# Fluxo:
+#   - Pull request para a main  -> roda a validação (o merge só deve acontecer com ✅).
+#   - Merge na main (push)      -> valida de novo e publica no GitHub Pages.
+#   - Manual (Actions > Run)    -> valida e publica a main.
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: pages-${{ github.ref }}
+  # PRs: cancela execuções antigas. Main: nunca interrompe uma publicação em andamento.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  deploy:
+  validar:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validar portal (sintaxe, i18n, conteúdo e ilustrações)
+        run: node scripts/validar.js
+
+  publicar:
+    needs: validar
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
