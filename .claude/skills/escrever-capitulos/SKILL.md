@@ -85,16 +85,19 @@ Palco de 800×450; o chão fica em y≈360; os personagens têm os pés em `(x, 
 - **Deus nunca é desenhado como pessoa.** A presença de Deus é o elemento `luz`. Anjos podem usar o elemento `anjo`.
 - **Personagens recorrentes:** defina no topo do arquivo um objeto `T` com a aparência fixa de cada personagem (cor da roupa, pele, barba, véu) e use o helper `p('nome', x, y, {extras})`, como em Gênesis. Um personagem deve parecer o mesmo em todo o livro.
 - Use `fala(texto, x, y)` para balões curtos (máx. 2 linhas, use `\n`) e `{ t: 'rotulo', texto, x: 20, y: 20 }` para títulos de cena ("Dia 1", "Mispá").
+- Os elementos e atributos disponíveis estão no `README.md`, incluindo os de Êxodo: sarça, mar aberto, maná, tábuas, tabernáculo, arca, candelabro, `peitoral` e `brilho`.
 - Prefira os elementos existentes. Se faltar um elemento essencial (ex.: sarça ardente, tábuas da lei), adicione-o em `js/ilustracoes.js` seguindo o padrão das funções (SVG centrado na base, sem dependências), documente-o no `README.md` e avise o usuário.
 - Varie fundos e enquadramentos entre as cenas e use animações com moderação (`surgir` na entrada, `andar` em viagens, `brilhar` na luz).
 
 ## 6. Publicar o livro e validar
 
 1. Registre o idioma em `js/livros.js`: `DISPONIVEIS = { …, <id>: ['pt-BR'] }`.
-2. Rode a validação e corrija **todos** os erros e avisos de cobertura e grafia:
+2. Rode a validação e corrija **todos** os erros e avisos de cobertura e grafia. Depois confira os números (idades, quantidades, durações) contra o texto e revise cada item apontado:
    ```bash
    node scripts/validar.js
+   node scripts/conferir-numeros.js <id>
    ```
+   Releia também, versículo a versículo, as afirmações que não são números (quem fez o quê, onde, em que ordem). Na revisão de Gênesis, por exemplo, apareceu "Ninrode fundou Nínive", quando a BLIVRE diz que foi Assur (Gn 10:11).
 3. Confira no navegador (Playwright já está instalado): sirva com `python3 -m http.server`, abra `#/livro/<id>/<n>`, percorra as cenas, abra "Ler na Bíblia" e verifique se não há erros de console nem personagens sobrepostos ou fora do palco. Veja uma ou duas capturas de tela.
 4. Para livros grandes, trabalhe em lotes (ex.: 10 capítulos), validando a cada lote. O livro aparece como disponível assim que estiver em `DISPONIVEIS`; capítulos ainda não escritos mostram "em preparação".
 5. Registre a mudança no `CHANGELOG.md` e publique com a skill `publicar`.
@@ -104,7 +107,7 @@ Palco de 800×450; o chão fica em y≈360; os personagens têm os pés em `(x, 
 - [ ] Li o capítulo inteiro na BLIVRE
 - [ ] As cenas cobrem todos os versículos (validador sem aviso)
 - [ ] Os nomes estão com a grafia da BLIVRE
-- [ ] Números e fatos conferidos com o texto
+- [ ] Números conferidos (`conferir-numeros.js`) e fatos relidos no texto
 - [ ] Deus aparece só como `luz`
 - [ ] `versiculo` com a referência de um versículo marcante
 - [ ] "Veja também" revisado em cada cena; `veja` fixado onde há promessa ↔ cumprimento, citação AT ↔ NT ou paralelo

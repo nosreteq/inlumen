@@ -100,7 +100,11 @@ window.ILUSTRA = (function () {
       ? `<path d="M-20 0 L-14 -50 Q0 -58 14 -50 L24 0Z" fill="${cor}"/>`
       : `<path d="M-22 0 L-14 -70 Q0 -78 14 -70 L22 0Z" fill="${cor}"/>${listras}`;
     const dy = ajoelhado ? 20 : 0;
+    // peitoral do sumo sacerdote: 12 pedras (Êx 28:15-21)
+    const peitoral = o.peitoral && !ajoelhado ? `<rect x="-9" y="-62" width="18" height="22" rx="2" fill="#e8c25a"/>${['#c0392b', '#f1c40f', '#27ae60', '#8e44ad', '#2980b9', '#e67e22', '#16a085', '#d35400', '#7f8c8d', '#c0392b', '#2c3e50', '#f39c12']
+      .map((c, i) => `<rect x="${-7 + (i % 3) * 5}" y="${-60 + Math.floor(i / 3) * 5}" width="4" height="4" fill="${c}"/>`).join('')}` : '';
     const cab = `<g transform="translate(0 ${dy})">
+      ${o.brilho ? '<g class="a-brilhar"><circle cy="-88" r="30" fill="#fff6b0" opacity=".55"/><circle cy="-88" r="21" fill="#fffbe0" opacity=".7"/></g>' : ''}
       ${o.veu ? `<path d="M-19 -82 Q-20 -108 0 -108 Q20 -108 19 -82 L22 -60 L-22 -60Z" fill="${o.veu}"/>` : ''}
       ${o.longo && !o.veu ? `<path d="M-15 -94 Q-22 -62 -16 -58 L16 -58 Q22 -62 15 -94Z" fill="${cabelo}"/>` : ''}
       <circle cy="-88" r="14" fill="${pele}"/>
@@ -115,7 +119,7 @@ window.ILUSTRA = (function () {
       bracos.map((d) => { const p = d.split('L')[1].trim().split(' '); return `<circle cx="${p[0]}" cy="${+p[1] + dy}" r="4.5" fill="${pele}"/>`; }).join('');
     const cajado = o.cajado ? `<path d="M30 0 L30 -112 Q30 -124 20 -122" stroke="#7a5230" stroke-width="5" fill="none" stroke-linecap="round"/>` : '';
     const sombra = `<ellipse cy="2" rx="26" ry="5" fill="#000" opacity=".18"/>`;
-    const tudo = sombra + cajado + corpo + bracosSvg + cab;
+    const tudo = sombra + cajado + corpo + peitoral + bracosSvg + cab;
     return deitado ? `<g transform="rotate(-90) translate(-10 0)">${tudo}</g>` : tudo;
   }
 
@@ -253,6 +257,53 @@ window.ILUSTRA = (function () {
     bebe: () => `<ellipse cy="-12" rx="24" ry="12" fill="#f4efe2" stroke="#d8cdb4"/><circle cx="-18" cy="-16" r="9" fill="#f1c9a0"/><path d="M-21 -17 h2 M-16 -17 h2" stroke="#333"/>`,
     coracao: (o) => `<path d="M0 10 C-30 -10 -24 -36 0 -24 C24 -36 30 -10 0 10Z" fill="${o.cor || '#e74c5c'}"/>`,
     sonho: () => `<g fill="#fff" opacity=".9"><circle cx="0" cy="0" r="5"/><circle cx="14" cy="-16" r="8"/></g>`,
+    /* ----- Êxodo ----- */
+    sarca: () => `<g fill="#4f7a2a">${[[-30, -18, 22], [0, -30, 28], [30, -18, 22], [-14, -8, 18], [16, -8, 18]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join('')}</g>
+      <g transform="translate(0 -30) scale(1.6)">${'<g class="a-tremer"><path d="M-20 0 Q-26 -30 -6 -50 Q-8 -30 4 -26 Q2 -44 14 -60 Q30 -30 20 0Z" fill="#f05a28"/><path d="M-10 0 Q-14 -20 0 -34 Q2 -18 10 -16 Q16 -8 10 0Z" fill="#ffc83a"/></g>'}</g>`,
+    cestinho: () => `<ellipse cy="-6" rx="38" ry="13" fill="#b8864a"/><path d="M-36 -10 Q0 4 36 -10 M-30 -2 Q0 10 30 -2" stroke="#8a5a2a" stroke-width="2" fill="none"/>
+      <ellipse cx="4" cy="-16" rx="22" ry="9" fill="#f4efe2"/><circle cx="-12" cy="-19" r="7" fill="#f1c9a0"/>`,
+    tijolos: () => Array.from({ length: 4 }, (_, r) => Array.from({ length: 5 - r }, (_, c) =>
+      `<rect x="${-62 + r * 13 + c * 26}" y="${-(r + 1) * 13}" width="24" height="12" fill="${(r + c) % 2 ? '#b5603a' : '#a0522d'}" stroke="#7a3a1a"/>`).join('')).join(''),
+    ra: () => `<ellipse cy="-10" rx="16" ry="10" fill="#4f9a3a"/><circle cx="-8" cy="-19" r="5" fill="#4f9a3a"/><circle cx="8" cy="-19" r="5" fill="#4f9a3a"/>
+      <circle cx="-8" cy="-20" r="2.5" fill="#111"/><circle cx="8" cy="-20" r="2.5" fill="#111"/><path d="M-6 -8 Q0 -4 6 -8" stroke="#2a5a1a" fill="none"/>
+      <path d="M-14 -4 l-10 6 M14 -4 l10 6" stroke="#4f9a3a" stroke-width="4" stroke-linecap="round"/>`,
+    moscas: (o) => { const r = rnd(o.semente || 13), w = o.w || 260, h = o.h || 140;
+      return `<g class="a-voar">${Array.from({ length: o.n || 40 }, () => `<circle cx="${(r() * w).toFixed(0)}" cy="${(r() * h).toFixed(0)}" r="${(1.5 + r() * 2).toFixed(1)}" fill="${o.cor || '#2a2a2a'}"/>`).join('')}</g>`; },
+    gafanhoto: (o) => { const r = rnd(o.semente || 17), n = o.n || 1, w = o.w || 0, h = o.h || 0;
+      const um = '<ellipse rx="12" ry="4" fill="#8a9a3a"/><circle cx="-12" cy="-1" r="4" fill="#6a7a2a"/><path d="M-2 0 l-6 9 M4 0 l8 9 M2 -3 Q12 -14 18 -4" stroke="#5a6a1a" stroke-width="1.6" fill="none"/>';
+      return `<g class="a-voar">${Array.from({ length: n }, (_, i) => `<g transform="translate(${i ? (r() * w).toFixed(0) : 0} ${i ? (r() * h).toFixed(0) : 0}) scale(${(0.6 + r() * 0.6).toFixed(2)})">${um}</g>`).join('')}</g>`; },
+    casa: (o) => `<rect x="-60" y="-80" width="120" height="80" fill="${o.cor || '#d9b88a'}"/><rect x="-66" y="-88" width="132" height="10" fill="#b8956a"/>
+      <rect x="-16" y="-50" width="32" height="50" fill="#5a3a20"/><rect x="30" y="-62" width="18" height="16" fill="#3a2a1a"/>
+      ${o.sangue ? '<path d="M-20 -54 h40" stroke="#b01e1e" stroke-width="5"/><path d="M-20 -54 v30 M20 -54 v30" stroke="#b01e1e" stroke-width="4"/>' : ''}
+      ${o.luz ? '<rect x="30" y="-62" width="18" height="16" fill="#ffd56a"/>' : ''}`,
+    'mar-aberto': () => { const parede = (x0, x1) => `<path d="M${x0} 0 V-250 Q${(x0 + x1) / 2} -270 ${x1} -250 V0Z" fill="#2f6fa3"/><path d="M${x0} -250 Q${(x0 + x1) / 2} -270 ${x1} -250" stroke="#bfe3f7" stroke-width="4" fill="none" class="a-tremer"/>`;
+      return `${parede(-420, -90)}${parede(90, 420)}<path d="M-90 0 Q-100 -120 -90 -250 M90 0 Q100 -120 90 -250" stroke="#8fc6ea" stroke-width="6" fill="none" opacity=".7"/>
+        <path d="M-90 0 L90 0 L60 -250 L-60 -250Z" fill="#d8b878"/>`; },
+    coluna: (o) => o.fogo
+      ? `<defs><linearGradient id="cf${++uid}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffcf3a"/><stop offset=".6" stop-color="#f07a28"/><stop offset="1" stop-color="#f05a28" stop-opacity="0"/></linearGradient></defs>
+        <g class="a-tremer"><path d="M-26 0 Q-40 -150 -14 -320 Q0 -360 14 -320 Q40 -150 26 0Z" fill="url(#cf${uid})"/></g>`
+      : `<g class="a-flutuar" fill="${o.cor || '#f4f4f4'}" opacity=".92">${Array.from({ length: 7 }, (_, i) => `<ellipse cx="${i % 2 ? 6 : -6}" cy="${-20 - i * 44}" rx="${34 - i * 1.5}" ry="28"/>`).join('')}</g>`,
+    mana: (o) => { const r = rnd(o.semente || 19), w = o.w || 400;
+      return Array.from({ length: o.n || 60 }, () => `<circle cx="${(r() * w - w / 2).toFixed(0)}" cy="${(-r() * 14).toFixed(0)}" r="${(1.6 + r() * 1.6).toFixed(1)}" fill="#fbfbf2" stroke="#ddd" stroke-width=".5"/>`).join('') +
+        `<g>${Array.from({ length: 14 }, () => `<circle class="a-cair-lento" style="animation-delay:${(r() * 2).toFixed(2)}s" cx="${(r() * w - w / 2).toFixed(0)}" cy="${(-80 - r() * 200).toFixed(0)}" r="2.2" fill="#fff"/>`).join('')}</g>`; },
+    rocha: (o) => `<path d="M-80 0 Q-90 -60 -50 -90 Q0 -120 50 -92 Q90 -60 80 0Z" fill="#9a8f80"/><path d="M-40 -70 Q-10 -84 20 -72" stroke="#7a7064" stroke-width="4" fill="none"/>
+      ${o.agua ? '<path class="a-tremer" d="M10 -40 Q30 -20 26 0 L60 0 Q50 -24 24 -46Z" fill="#5aaee0"/><ellipse cx="60" cy="0" rx="60" ry="8" fill="#5aaee0"/>' : ''}`,
+    tabuas: (o) => { const t = (x) => `<path d="M${x - 22} 0 V-56 Q${x - 22} -76 ${x} -76 Q${x + 22} -76 ${x + 22} -56 V0Z" fill="${o.quebradas ? '#b8b0a0' : '#d8d2c4'}" stroke="#8a8274" stroke-width="2"/>
+        ${[-58, -48, -38, -28, -18].map((y) => `<path d="M${x - 14} ${y} h28" stroke="#8a8274" stroke-width="2"/>`).join('')}`;
+      return `<g${o.quebradas ? ' transform="rotate(-12)"' : ''}>${t(-24)}</g><g${o.quebradas ? ' transform="rotate(16) translate(10 6)"' : ''}>${t(24)}</g>
+        ${o.quebradas ? '<path d="M-30 -40 l10 -8 l-6 -6 l10 -8 M18 -30 l12 -6 l-4 -8" stroke="#5a5244" stroke-width="2" fill="none"/>' : ''}`; },
+    tabernaculo: () => `<rect x="-230" y="-60" width="460" height="60" fill="#f6f2e6" stroke="#c8bea8"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${-232 + i * 41.5}" y="-66" width="4" height="66" fill="#9a8a6a"/>`).join('')}
+      <rect x="-30" y="-60" width="60" height="60" fill="#3a6fc4" opacity=".8"/><path d="M-30 -60 h60" stroke="#c0392b" stroke-width="4"/>
+      <rect x="30" y="-150" width="170" height="110" fill="#7a5a3a"/><path d="M26 -150 h178 v12 h-178Z" fill="#5a3a20"/><rect x="40" y="-140" width="14" height="100" fill="#d9a520"/>
+      ${E.altar({ fogo: true }).replace('<g fill', '<g transform="translate(-120 0) scale(.9)" fill')}`,
+    'arca-alianca': () => `<rect x="-60" y="-50" width="120" height="50" rx="3" fill="#d9a520" stroke="#a87410" stroke-width="2"/><rect x="-64" y="-56" width="128" height="8" fill="#f2c230"/>
+      <path d="M-80 -24 H80" stroke="#a87410" stroke-width="6" stroke-linecap="round"/>
+      <path d="M-50 -56 Q-60 -100 -6 -82 L-6 -56Z M50 -56 Q60 -100 6 -82 L6 -56Z" fill="#f2c230" stroke="#a87410"/>
+      <g class="a-brilhar"><ellipse cy="-70" rx="60" ry="30" fill="#fff6b0" opacity=".35"/></g>`,
+    candelabro: () => { const arco = (r) => `<path d="M${-r} -110 Q${-r} -60 0 -60 Q${r} -60 ${r} -110" stroke="#d9a520" stroke-width="6" fill="none"/>`;
+      return `<path d="M-28 0 H28 L16 -12 H-16Z" fill="#d9a520"/><rect x="-3" y="-120" width="6" height="110" fill="#d9a520"/>${[22, 44, 66].map(arco).join('')}
+        <g class="a-tremer">${[-66, -44, -22, 0, 22, 44, 66].map((x) => `<ellipse cx="${x}" cy="-122" rx="5" ry="10" fill="#ffc83a"/><ellipse cx="${x}" cy="-119" rx="2.5" ry="5" fill="#fff6b0"/>`).join('')}</g>`; },
+
     fala: (o) => {
       const t = esc(o.texto || ''), linhas = t.split('\n'), w = Math.max(...linhas.map((l) => l.length)) * 9.4 + 28, h = linhas.length * 22 + 16;
       const tx = o.cauda === 'dir' ? w - 24 : 24;

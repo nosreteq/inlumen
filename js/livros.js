@@ -91,6 +91,7 @@ window.BIBLIA = (function () {
   // livro -> idiomas em que o conteúdo ilustrado existe (o primeiro é o original)
   const DISPONIVEIS = {
     genesis: ['pt-BR'],
+    exodo: ['pt-BR'],
   };
 
   const livros = L.map(([id, nome, abrev, capitulos, secao, resumo], i) => ({

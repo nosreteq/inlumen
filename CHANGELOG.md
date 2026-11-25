@@ -9,6 +9,22 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 
 Cada pull request que muda o portal acrescenta uma nova versão no topo.
 
+## [0.6.0] - 2026-11-25
+
+### Adicionado
+- **Êxodo completo:** 40 capítulos e 98 cenas ilustradas, cobrindo todos os 1.213 versículos, fiéis à Bíblia Livre: escravidão, nascimento de Moisés, sarça ardente, as dez pragas, a Páscoa, o mar Vermelho, maná, Sinai, Dez Mandamentos, bezerro de ouro e o tabernáculo.
+- 15 novos elementos de ilustração (sarça ardente, cesto no rio, tijolos, rãs, moscas, gafanhotos, casa com sangue nas portas, mar aberto, colunas de nuvem e de fogo, maná, rocha com água, tábuas da Lei, tabernáculo, arca da aliança e candelabro), além do peitoral do sumo sacerdote e do rosto resplandecente.
+- "Veja também" fixo (`veja`) nas cenas-chave de Êxodo e de Gênesis, ligando promessa ↔ cumprimento no Novo Testamento (ex.: Êx 12 → Jo 1:29; Gn 49 → Ap 5:5).
+- `scripts/conferir-numeros.js`: compara os números das histórias, em algarismos ou por extenso, com o texto da BLIVRE.
+
+### Corrigido
+- **Gênesis, revisão contra a BLIVRE:**
+  - Gn 10: quem construiu Nínive foi Assur, não Ninrode;
+  - Gn 5: Enoque "desapareceu, porque Deus o levou" (a ideia de não ver a morte vem de Hebreus);
+  - Gn 41: a idade de José (30 anos) foi para a cena do versículo 41:46.
+- Validador: cenas com o campo `veja` deixavam de contar na cobertura dos versículos.
+- Animação `cair-lento` (usada pelo maná) não existia no CSS.
+
 ## [0.5.0] - 2026-11-25
 
 ### Adicionado
