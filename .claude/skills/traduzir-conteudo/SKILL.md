@@ -23,7 +23,7 @@ Os códigos de idioma ficam em `I18N.IDIOMAS` (ex.: `en`, `es`, `zh-CN`, `ar`). 
    - nas cenas: `texto`;
    - dentro das ilustrações: o `texto` dos balões `fala(...)` e dos `rotulo`;
    - no registro final: `autor`, `epoca`, `tema`, `introducao` e `partes[].titulo`.
-3. **Nunca altere:** `ref`, `versiculo` (referências bíblicas), coordenadas, cores, elementos, animações, o objeto `T` de personagens e a estrutura do arquivo.
+3. **Nunca altere:** `ref`, `versiculo`, `veja` (referências bíblicas), coordenadas, cores, elementos, animações, o objeto `T` de personagens e a estrutura do arquivo.
 4. Altere o idioma no registro: `CONTEUDO.registrar('<id>', { … }, '<idioma>');`
 5. Registre o idioma em `js/livros.js`: `DISPONIVEIS = { <id>: ['pt-BR', '<idioma>'] }`. O primeiro da lista continua sendo o original.
 
@@ -57,4 +57,4 @@ node scripts/validar.js
 - Sem erros; avisos de "chave sem tradução" indicam lacunas na interface.
 - Confira no navegador com `?lang=<codigo>`: home, página do livro, um capítulo (balões dentro do palco) e a página "Sobre". Em RTL, confira o alinhamento.
 - Informe ao usuário que traduções geradas precisam de **revisão por falante nativo** antes de divulgar.
-- Publique com a skill `publicar`.
+- Registre a mudança no `CHANGELOG.md` e publique com a skill `publicar`.

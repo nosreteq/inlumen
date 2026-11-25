@@ -117,3 +117,64 @@ window.TEXTO_BIBLICO = (function () {
 
   return { TRADUCOES, POR_IDIOMA, PADRAO, registrar, traducaoPara, carregarLivro, interpretar, verificar, expandir, obter, formatar, credito, _dados: dados };
 })();
+
+/* Referências cruzadas (OpenBible.info, CC BY): biblia/referencias/<livro>.js, carregadas sob demanda.
+ * Cada versículo tem até 8 referências, ordenadas da mais para a menos relevante. */
+window.REFERENCIAS = (function () {
+  const CREDITO = {
+    nome: 'OpenBible.info Cross References',
+    url: 'https://www.openbible.info/labs/cross-references/',
+    licenca: 'CC BY',
+    urlLicenca: 'https://creativecommons.org/licenses/by/4.0/',
+    base: 'Treasury of Scripture Knowledge (domínio público)',
+  };
+  const dados = {};
+  const carregando = {};
+
+  function registrar(livro, mapa) { dados[livro] = mapa; }
+
+  function carregar(livro) {
+    if (dados[livro]) return Promise.resolve(dados[livro]);
+    if (typeof document === 'undefined') return Promise.resolve(null);
+    if (!carregando[livro]) {
+      carregando[livro] = new Promise((ok) => {
+        const s = document.createElement('script');
+        s.src = `biblia/referencias/${livro}.js`;
+        s.onload = () => ok(dados[livro] || null);
+        s.onerror = () => { delete carregando[livro]; ok(null); };
+        document.head.appendChild(s);
+      });
+    }
+    return carregando[livro];
+  }
+
+  /* Referências de um versículo: Promise<['romanos 4:3', …]> */
+  async function doVersiculo(livro, c, v) {
+    const m = await carregar(livro);
+    return (m && m[`${c}:${v}`]) || [];
+  }
+
+  /* "Veja também" de um trecho: junta as referências de todos os versículos, pontua pela posição
+   * (mais relevantes primeiro), remove o que cai dentro do próprio trecho e devolve as `max` melhores. */
+  async function doTrecho(ref, livroPadrao, max = 6) {
+    const TB = window.TEXTO_BIBLICO;
+    const vs = TB.expandir(ref, livroPadrao);
+    const proprios = new Set(vs.map((x) => `${x.livro} ${x.c}:${x.v}`));
+    await Promise.all([...new Set(vs.map((x) => x.livro))].map(carregar));
+    const pontos = new Map();
+    for (const x of vs) {
+      ((dados[x.livro] || {})[`${x.c}:${x.v}`] || []).forEach((r, i) => pontos.set(r, (pontos.get(r) || 0) + (8 - i)));
+    }
+    const escolhidas = [], usados = new Set(proprios);
+    for (const [r] of [...pontos.entries()].sort((a, b) => b[1] - a[1])) {
+      const chaves = TB.expandir(r).map((y) => `${y.livro} ${y.c}:${y.v}`);
+      if (chaves.some((k) => usados.has(k))) continue; // sobrepõe o próprio trecho ou uma já escolhida
+      chaves.forEach((k) => usados.add(k));
+      escolhidas.push(r);
+      if (escolhidas.length >= max) break;
+    }
+    return escolhidas;
+  }
+
+  return { CREDITO, registrar, carregar, doVersiculo, doTrecho, _dados: dados };
+})();

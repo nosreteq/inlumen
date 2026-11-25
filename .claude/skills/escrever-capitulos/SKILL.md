@@ -37,6 +37,8 @@ C[n] = {
 ```
 
 - **Cobertura total:** as `ref` das cenas, somadas, devem cobrir **todos os versículos** do capítulo, sem lacunas. Genealogias e listas podem ser resumidas numa cena, mas a `ref` cobre o trecho inteiro. Uma cena pode avançar para o capítulo seguinte (ex.: `'2:1-3'` no capítulo 1), e isso conta na cobertura.
+- **`veja` (opcional, por cena):** referências cruzadas fixas. Veja a etapa 4.
+- O leitor da Bíblia liga cada cena aos versículos automaticamente pelo `ref`: um `ref` correto já cria o de-para Bíblia ↔ história.
 - **`versiculo`:** escolha o versículo mais memorável do capítulo. Pode ser intervalo (`'48:15-16'`) ou de outro livro (`'lucas 17:32'`), mas prefira o próprio livro.
 - Ao final do arquivo, registre com `partes` (agrupamento temático dos capítulos), `autor`, `epoca`, `tema`, `introducao` e `capa` (uma cena):
   `CONTEUDO.registrar('<id>', { …, capitulos: C }, 'pt-BR');`
@@ -48,7 +50,35 @@ C[n] = {
 - **Sobriedade:** violência, sexualidade e temas adultos são tratados com respeito, sem detalhes inadequados (ver Gn 19, 34 e 38 como exemplo).
 - **Sem opinião doutrinária controversa:** `licao` e `pergunta` focam no que o texto mostra.
 
-## 4. Ilustrações
+## 4. Referências cruzadas ("Veja também")
+
+Cada cena mostra "🔗 Veja também" com até 6 referências. Elas são calculadas **automaticamente** a partir do `ref` da cena e das referências cruzadas do OpenBible.info em `biblia/referencias/`. O leitor da Bíblia também liga cada versículo à cena que o reconta. Por isso, um `ref` preciso é o que garante boas referências e um de-para correto.
+
+**Revise as referências automáticas de cada cena** depois de escrever o capítulo:
+
+```bash
+node -e 'global.window=global; require("./js/livros.js"); require("./js/versiculos.js"); require("./js/biblia-texto.js");
+for (const f of require("fs").readdirSync("biblia/referencias").filter((f) => f.endsWith(".js"))) require("./biblia/referencias/" + f);
+global.CONTEUDO={registrar(id,d){global.D=d}}; require("./conteudo/pt-BR/<id>.js");
+(async () => { for (const [n, cap] of Object.entries(D.capitulos)) for (const [i, cn] of cap.cenas.entries())
+  console.log(`${n}.${i + 1} (${cn.ref}):`, [...(cn.veja || []), ...(await REFERENCIAS.doTrecho(cn.ref, "<id>", 6))].join(" | ")); })()'
+```
+
+**Quando fixar referências com `veja: […]`** (elas aparecem antes das automáticas):
+
+- **Promessa ↔ cumprimento** essencial que não apareceu na lista: profecia messiânica e sua citação no NT, tipologia explícita no NT (ex.: Gn 22 → `'hebreus 11:17-19'`, `'joao 1:29'`).
+- **No Novo Testamento, a citação do Antigo:** quando o texto cita ou alude a uma passagem do AT, fixe a origem (ex.: Mt 4:4 → `'deuteronomio 8:3'`).
+- **Paralelos de uma mesma história:** os Evangelhos sinóticos entre si (Mt/Mc/Lc), Samuel/Reis ↔ Crônicas.
+- Fixe **poucas**, no máximo 3 por cena, e só as que um leitor leigo acharia esclarecedoras.
+
+**Regras:**
+
+- **Formato:** `'<id do livro> <cap>:<versículo>'` ou um intervalo (`'romanos 4:3-6'`), com os ids de `js/livros.js` (ex.: `1joao`, `jo` = Jó, `joao` = João).
+- **Leia o versículo na BLIVRE antes de fixar:** a referência precisa de fato tratar do mesmo tema. O CI confere se ela existe, mas não se é pertinente.
+- **Não repita** o que já aparece automaticamente, nem trechos do próprio capítulo que outras cenas já recontam.
+- **Se uma referência automática parecer fora de contexto,** não há como removê-la pelo conteúdo. Avise o usuário em vez de editar `biblia/referencias/`, que é gerado pelo importador.
+
+## 5. Ilustrações
 
 Palco de 800×450; o chão fica em y≈360; os personagens têm os pés em `(x, y)`, normalmente y≈390-400. A referência completa de fundos, elementos, animações e atributos de `pessoa` está no `README.md` (seção "Ilustrações"); os elementos são implementados em `js/ilustracoes.js`.
 
@@ -58,7 +88,7 @@ Palco de 800×450; o chão fica em y≈360; os personagens têm os pés em `(x, 
 - Prefira os elementos existentes. Se faltar um elemento essencial (ex.: sarça ardente, tábuas da lei), adicione-o em `js/ilustracoes.js` seguindo o padrão das funções (SVG centrado na base, sem dependências), documente-o no `README.md` e avise o usuário.
 - Varie fundos e enquadramentos entre as cenas e use animações com moderação (`surgir` na entrada, `andar` em viagens, `brilhar` na luz).
 
-## 5. Publicar o livro e validar
+## 6. Publicar o livro e validar
 
 1. Registre o idioma em `js/livros.js`: `DISPONIVEIS = { …, <id>: ['pt-BR'] }`.
 2. Rode a validação e corrija **todos** os erros e avisos de cobertura e grafia:
@@ -67,7 +97,7 @@ Palco de 800×450; o chão fica em y≈360; os personagens têm os pés em `(x, 
    ```
 3. Confira no navegador (Playwright já está instalado): sirva com `python3 -m http.server`, abra `#/livro/<id>/<n>`, percorra as cenas, abra "Ler na Bíblia" e verifique se não há erros de console nem personagens sobrepostos ou fora do palco. Veja uma ou duas capturas de tela.
 4. Para livros grandes, trabalhe em lotes (ex.: 10 capítulos), validando a cada lote. O livro aparece como disponível assim que estiver em `DISPONIVEIS`; capítulos ainda não escritos mostram "em preparação".
-5. Publique com a skill `publicar`.
+5. Registre a mudança no `CHANGELOG.md` e publique com a skill `publicar`.
 
 ## Checklist por capítulo
 
@@ -77,4 +107,5 @@ Palco de 800×450; o chão fica em y≈360; os personagens têm os pés em `(x, 
 - [ ] Números e fatos conferidos com o texto
 - [ ] Deus aparece só como `luz`
 - [ ] `versiculo` com a referência de um versículo marcante
+- [ ] "Veja também" revisado em cada cena; `veja` fixado onde há promessa ↔ cumprimento, citação AT ↔ NT ou paralelo
 - [ ] Conferido visualmente no navegador
