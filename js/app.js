@@ -11,6 +11,9 @@
   const app = document.getElementById('app');
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const nome = (l) => I18N.nomeLivro(l);
+  /* lang + dir de um trecho cujo idioma pode diferir da interface (ex.: história em pt-BR numa interface em árabe) */
+  const attrsIdioma = (idioma) => ` lang="${idioma}" dir="${(I18N.IDIOMAS.find((i) => i.codigo === idioma) || I18N.info()).dir}"`;
+  const attrsUI = () => attrsIdioma(I18N.atual);
   const nCaps = (n) => t('capitulos', { n });
 
   /* ---------- armazenamento local (progresso de leitura) ---------- */
@@ -38,9 +41,11 @@
   if (seletor) {
     seletor.innerHTML = I18N.IDIOMAS.map((i) => `<option value="${i.codigo}" lang="${i.codigo}">${esc(i.nome)}</option>`).join('');
     seletor.value = I18N.atual;
-    seletor.addEventListener('change', () => { I18N.definir(seletor.value); rotear(); });
+    seletor.addEventListener('change', () => { I18N.definir(seletor.value); atualizarRodape(); rotear(); });
   }
   I18N.aplicarDocumento();
+  const rodapeBiblia = document.getElementById('credito-biblia');
+  const atualizarRodape = () => { if (rodapeBiblia) rodapeBiblia.innerHTML = `<span${attrsUI()}>${esc(t('rodape.biblia'))}</span> ${creditoHtml(siglaBiblia())}`; };
 
   /* ---------- carregamento preguiçoso do conteúdo (idioma → original) ---------- */
   const carregando = {};
@@ -69,6 +74,20 @@
     }
     return { dados: null, idioma: null };
   }
+  /* ---------- texto bíblico (Bíblia Livre por padrão) ---------- */
+  const TB = window.TEXTO_BIBLICO;
+  const siglaBiblia = () => TB.traducaoPara(I18N.atual);
+  const rotuloRef = (livro, ref) => `${nome(livro)} ${ref}`;
+  /* HTML dos versículos com números; usado no painel "Ler na Bíblia" e no bloco "Para guardar". */
+  async function htmlVersiculos(livro, ref, { numeros = true } = {}) {
+    const sigla = siglaBiblia();
+    const vs = await TB.obter(ref, livro.id, sigla);
+    if (!vs.length || vs.some((v) => v.texto == null)) return `<p class="erro-biblia">${esc(t('biblia.erro'))}</p>`;
+    const corpo = vs.map((v) => (numeros ? `<sup>${v.c}:${v.v}</sup> ` : '') + TB.formatar(v.texto)).join(' ');
+    const info = TB.TRADUCOES[sigla];
+    return `<blockquote${attrsIdioma(info.idioma)}>${corpo}</blockquote><cite${attrsIdioma(info.idioma)}>${esc(rotuloRef(livro, ref))} · <abbr title="${esc(TB.credito(sigla))}">${info.sigla}</abbr></cite>`;
+  }
+
   const avisoTraducao = (idiomaConteudo) => idiomaConteudo && idiomaConteudo !== I18N.atual
     ? `<div class="aviso" lang="${I18N.atual}">🌐 ${esc(t('cap.semTraducao', { idioma: I18N.info().nome, original: I18N.nomeIdioma(idiomaConteudo) }))}</div>` : '';
 
@@ -179,7 +198,7 @@
     const { dados, idioma } = await carregarConteudo(id);
     const capa = dados?.capa || (l.testamento === 'AT' ? CAPA_AT : CAPA_NT);
     const caps = dados?.capitulos || {};
-    const lang = idioma ? ` lang="${idioma}"` : '';
+    const lang = idioma ? attrsIdioma(idioma) : '';
     const cartaoCap = (c) => {
       const cap = caps[c];
       return `<a class="cartao-cap ${foiLido(id, c) ? 'lido' : ''} ${cap ? '' : 'vazio'}" href="#/livro/${id}/${c}">
@@ -202,7 +221,7 @@
             ${dados?.autor ? `<span class="ficha"${lang}>✍️ ${esc(dados.autor)}</span>` : ''}
             ${dados?.epoca ? `<span class="ficha"${lang}>🕰️ ${esc(dados.epoca)}</span>` : ''}
           </div>
-          ${introducao ? `<p${dados?.introducao ? lang : ' lang="pt-BR"'}>${esc(introducao)}</p>` : ''}
+          ${introducao ? `<p${dados?.introducao ? lang : attrsIdioma('pt-BR')}>${esc(introducao)}</p>` : ''}
           ${dados?.tema ? `<p><strong>${t('livro.tema')}</strong> <span${lang}>${esc(dados.tema)}</span></p>` : ''}
           ${!l.disponivel ? `<p class="ficha" style="display:inline-block">${t('livro.preparacao')}</p>` : ''}
           <p style="color:var(--suave)">${esc(t('livro.lidos', { n: I18N.numero(lidosDoLivro(id)), total: I18N.numero(l.capitulos) }))}</p>
@@ -251,7 +270,7 @@
     }
 
     const cenas = cap.cenas;
-    const lang = ` lang="${idioma}"`;
+    const lang = attrsIdioma(idioma);
     const tituloCena = (cn) => cn.alt || cn.texto;
     app.innerHTML = `<div class="container">${mig}
       ${avisoTraducao(idioma)}
@@ -271,13 +290,16 @@
         <button class="botao" id="contar" title="${esc(t('cap.contarDica'))}">${t('cap.contar')}</button>
       </div>
       <div class="blocos"${lang}>
-        ${cap.licao ? `<div class="bloco"><h3 lang="${I18N.atual}">${t('cap.refletir')}</h3><p>${esc(cap.licao)}</p></div>` : ''}
-        ${cap.pergunta ? `<div class="bloco"><h3 lang="${I18N.atual}">${t('cap.conversar')}</h3><p>${esc(cap.pergunta)}</p></div>` : ''}
-        ${cap.personagens?.length ? `<div class="bloco"><h3 lang="${I18N.atual}">${t('cap.personagens')}</h3><div class="fichas">${cap.personagens.map((p) => `<span class="ficha">${esc(p)}</span>`).join('')}</div></div>` : ''}
-        ${cap.versiculo ? `<div class="bloco"><h3 lang="${I18N.atual}">${t('cap.guardar')}</h3><p>${esc(cap.versiculo)}</p></div>` : ''}
+        ${cap.licao ? `<div class="bloco"><h3${attrsUI()}>${t('cap.refletir')}</h3><p>${esc(cap.licao)}</p></div>` : ''}
+        ${cap.pergunta ? `<div class="bloco"><h3${attrsUI()}>${t('cap.conversar')}</h3><p>${esc(cap.pergunta)}</p></div>` : ''}
+        ${cap.personagens?.length ? `<div class="bloco"><h3${attrsUI()}>${t('cap.personagens')}</h3><div class="fichas">${cap.personagens.map((p) => `<span class="ficha">${esc(p)}</span>`).join('')}</div></div>` : ''}
+        ${cap.versiculo ? `<div class="bloco bloco-versiculo"><h3${attrsUI()}>${t('cap.guardar')}</h3><div class="versiculo-guardar"><p class="carregando-biblia">${esc(t('biblia.carregando'))}</p></div></div>` : ''}
       </div>
       ${nav}
     </div>`;
+
+    const guardar = app.querySelector('.versiculo-guardar');
+    if (guardar) htmlVersiculos(l, cap.versiculo, { numeros: false }).then((h) => { if (guardar.isConnected) guardar.innerHTML = h; });
 
     const quadros = [...app.querySelectorAll('.quadro')];
     const narr = app.querySelector('.narracao');
@@ -297,7 +319,15 @@
       });
       pontos.forEach((p, k) => { p.classList.toggle('ativo', k === atual); p.setAttribute('aria-selected', String(k === atual)); });
       const cn = cenas[atual];
-      narr.innerHTML = `<p>${esc(cn.texto)}${cn.ref ? `<span class="ref-cena" lang="${I18N.atual}">📖 ${esc(nome(l))} ${esc(cn.ref)}</span>` : ''}</p>`;
+      narr.innerHTML = `<p>${esc(cn.texto)}</p>` + (cn.ref ? `<details class="texto-biblico"${attrsUI()}>
+          <summary>📖 ${esc(t('cap.lerBiblia', { ref: rotuloRef(l, cn.ref) }))}</summary>
+          <div class="versiculos"><p class="carregando-biblia">${esc(t('biblia.carregando'))}</p></div></details>` : '');
+      const det = narr.querySelector('details');
+      if (det) det.addEventListener('toggle', async () => {
+        if (!det.open || det.dataset.ok) return;
+        det.dataset.ok = '1';
+        det.querySelector('.versiculos').innerHTML = await htmlVersiculos(l, cn.ref);
+      });
       contador.textContent = t('cap.cena', { n: I18N.numero(atual + 1), total: I18N.numero(cenas.length) });
       btnAnt.disabled = atual === 0;
       btnProx.textContent = atual === cenas.length - 1 ? t(proximo ? 'cap.proxCap' : 'cap.fim') : t('cap.proxima');
@@ -345,6 +375,12 @@
     mostrar(0);
   }
 
+  function creditoHtml(sigla = TB.PADRAO) {
+    const tr = TB.TRADUCOES[sigla];
+    return `<a href="${tr.urlFonte}" target="_blank" rel="noopener">${esc(tr.nome)} (${tr.sigla})</a>, ${esc(tr.descricao)}. ${esc(tr.direitos)}. ` +
+      `<a href="${tr.urlLicenca}" target="_blank" rel="noopener">${esc(tr.licenca)}</a>. ${esc(tr.versao)}. Texto reproduzido sem alterações.`;
+  }
+
   function viewSobre() {
     // textos de 'sobre.*' são HTML confiável definido em js/i18n.js
     app.innerHTML = `<div class="container" style="max-width:780px">
@@ -356,6 +392,9 @@
       <h3>${t('sobre.h2')}</h3>
       <p>${t('sobre.p2')}</p>
       <p>${t('sobre.p3')}</p>
+      <h3>${t('sobre.h3')}</h3>
+      <p>${esc(t('sobre.p4', { versao: `${TB.TRADUCOES[TB.PADRAO].nome} (${TB.TRADUCOES[TB.PADRAO].sigla})` }))}</p>
+      <p class="credito-biblia"${attrsIdioma('pt-BR')}>${creditoHtml()}</p>
       <p><a class="botao primario" href="#/livro/genesis/1">${esc(t('home.comecar', { livro: nome(porId.genesis) }))}</a></p>
     </div>`;
   }
@@ -378,5 +417,6 @@
     document.title = l ? `${nome(l)}${partes[2] ? ' ' + partes[2] : ''} · In Lumen` : t('site.titulo');
   }
   window.addEventListener('hashchange', rotear);
+  atualizarRodape();
   rotear();
 })();

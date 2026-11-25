@@ -1,6 +1,8 @@
 /* Gênesis: estudo ilustrado, capítulo por capítulo.
  * Textos: recontos livres em linguagem simples (não são tradução bíblica).
- * Formato de cada capítulo: { titulo, personagens[], cenas[{ texto, ref, cena:{fundo, el[]} }], licao, pergunta, versiculo }
+ * Texto bíblico de referência: Bíblia Livre (BLIVRE), via biblia/blivre/. Nomes e grafias seguem a BLIVRE.
+ * Formato de cada capítulo: { titulo, personagens[], cenas[{ texto, ref, cena:{fundo, el[]} }], licao, pergunta,
+ *   versiculo: referência ('1:1', '48:15-16') cujo texto literal é exibido a partir da tradução bíblica }
  */
 (function () {
   /* ---------- personagens recorrentes (aparência consistente) ---------- */
@@ -66,7 +68,7 @@
     ],
     licao: 'O mundo não surgiu por acaso: foi criado por um Deus bom, que faz tudo com ordem e propósito. Todo ser humano tem valor porque foi feito à imagem de Deus.',
     pergunta: 'Qual parte da criação mais te faz admirar a Deus? Por que é importante saber que fomos feitos à imagem dele?',
-    versiculo: 'No princípio, Deus criou os céus e a terra. (Gênesis 1:1)',
+    versiculo: '1:1',
   };
 
   C[2] = {
@@ -87,7 +89,7 @@
     ],
     licao: 'Deus criou o ser humano para viver em relacionamento: com Ele, com a criação e uns com os outros. O casamento e a família fazem parte do plano original de Deus.',
     pergunta: 'Por que você acha que Deus deu uma regra a Adão no jardim? O que isso mostra sobre liberdade e confiança?',
-    versiculo: 'Não é bom que o homem esteja só; farei para ele alguém que o ajude e lhe corresponda. (Gênesis 2:18)',
+    versiculo: '2:18',
   };
 
   C[3] = {
@@ -109,7 +111,7 @@
     ],
     licao: 'O pecado é desconfiar de Deus e escolher o próprio caminho. Ele traz separação e dor, mas Deus já prometeu ali um Salvador que venceria o mal.',
     pergunta: 'Adão culpou Eva e Eva culpou a serpente. Por que é tão difícil assumir os próprios erros?',
-    versiculo: 'Porei inimizade entre você e a mulher, entre a sua descendência e o descendente dela; este lhe ferirá a cabeça. (Gênesis 3:15, paráfrase)',
+    versiculo: '3:15',
   };
 
   C[4] = {
@@ -128,14 +130,14 @@
     ],
     licao: 'A raiva não controlada leva a grandes males. Deus nos alerta antes de cairmos e nos chama a cuidar uns dos outros: somos, sim, responsáveis pelos nossos irmãos.',
     pergunta: 'O que você costuma fazer quando sente raiva ou inveja? Como dominar esses sentimentos antes que eles nos dominem?',
-    versiculo: 'Se você fizer o bem, não será aceito? O pecado está à porta, mas você deve dominá-lo. (Gênesis 4:7, paráfrase)',
+    versiculo: '4:7',
   };
 
   C[5] = {
     titulo: 'De Adão a Noé',
     personagens: ['Adão', 'Sete', 'Enoque', 'Matusalém', 'Lameque', 'Noé'],
     cenas: [
-      { ref: '5:1-5', texto: 'Este capítulo é uma árvore genealógica: a lista das gerações de Adão até Noé. Ele lembra que o ser humano foi feito à imagem de Deus e que essa imagem passa de pais para filhos. Adão viveu 930 anos e morreu, como Deus tinha dito.',
+      { ref: '5:1-20', texto: 'Este capítulo é uma árvore genealógica: a lista das gerações de Adão até Noé. Ele lembra que o ser humano foi feito à imagem de Deus e que essa imagem passa de pais para filhos. Adão viveu 930 anos e morreu, como Deus tinha dito.',
         cena: { fundo: 'dia', el: [p('adao', 160, 395, { velho: true, cabelo: '#ddd', barba: '#ddd', cajado: true }), p('caim', 260, 392, { cor: '#6a8a5a', s: .95 }), p('abraao', 360, 392, { cor: '#8a6a9a', cajado: false, s: .9 }),
           p('isaque', 450, 392, { s: .85 }), p('jaco', 535, 392, { s: .8, cajado: false }), p('noe', 630, 392, { s: .9, velho: false, cabelo: '#3a2a1e', barba: '#3a2a1e' }), { t: 'rotulo', texto: '10 gerações', x: 20, y: 20 }] } },
       { ref: '5:21-24', texto: 'Um nome se destaca: Enoque. A Bíblia diz que ele “andava com Deus”, ou seja, vivia em amizade com Ele. Um dia Enoque já não estava mais aqui, porque Deus o levou. Ele não passou pela morte.',
@@ -145,7 +147,7 @@
     ],
     licao: 'Gerações vêm e vão, mas Deus continua cumprindo seu plano através das famílias. Como Enoque, podemos “andar com Deus” todos os dias.',
     pergunta: 'O que significa, na prática, “andar com Deus” no dia a dia?',
-    versiculo: 'Enoque andou com Deus; e já não foi encontrado, pois Deus o havia tomado. (Gênesis 5:24)',
+    versiculo: '5:24',
   };
 
   C[6] = {
@@ -161,7 +163,7 @@
     ],
     licao: 'Mesmo num mundo cheio de maldade, é possível viver de forma justa. Noé obedeceu a Deus quando ninguém mais obedecia, e quando a ordem parecia estranha.',
     pergunta: 'Noé obedeceu mesmo sem ver chuva. Em que área da sua vida você precisa confiar em Deus antes de ver o resultado?',
-    versiculo: 'Noé, porém, achou graça diante do Senhor. (Gênesis 6:8)',
+    versiculo: '6:8',
   };
 
   C[7] = {
@@ -178,7 +180,7 @@
     ],
     licao: 'Deus leva o mal a sério e julga o pecado, mas sempre oferece um caminho de salvação. A arca era o lugar seguro preparado por Ele.',
     pergunta: 'Por que você acha que o próprio Deus fechou a porta da arca? O que isso mostra sobre o cuidado dele?',
-    versiculo: 'E o Senhor fechou a porta atrás deles. (Gênesis 7:16)',
+    versiculo: '7:16',
   };
 
   C[8] = {
@@ -194,7 +196,7 @@
     ],
     licao: 'Deus se lembra dos seus, mesmo nos longos períodos de espera. Noé respondeu à salvação com gratidão e adoração.',
     pergunta: 'A primeira atitude de Noé fora da arca foi agradecer. Como você costuma reagir quando Deus te livra de algo difícil?',
-    versiculo: 'Enquanto durar a terra, não deixará de haver plantio e colheita, frio e calor, verão e inverno, dia e noite. (Gênesis 8:22)',
+    versiculo: '8:22',
   };
 
   C[9] = {
@@ -210,7 +212,7 @@
     ],
     licao: 'Deus é fiel às suas promessas. Toda vez que vemos um arco-íris, lembramos que Ele cumpre o que diz, mesmo quando nós falhamos.',
     pergunta: 'Sem e Jafé protegeram a honra do pai mesmo diante do erro dele. Como podemos agir com respeito quando alguém que amamos erra?',
-    versiculo: 'O meu arco nas nuvens será o sinal da aliança entre mim e a terra. (Gênesis 9:13, paráfrase)',
+    versiculo: '9:13',
   };
 
   C[10] = {
@@ -221,12 +223,12 @@
         cena: { fundo: 'mar', el: [p('irmao3', 200, 300, { s: .8 }), p('irmao1', 400, 300, { s: .8 }), p('irmao2', 600, 300, { s: .8 }), fala('Jafé', 160, 160), fala('Sem', 370, 160), fala('Cam', 570, 160), { t: 'peixe', x: 300, y: 380, anim: 'nadar' }] } },
       { ref: '10:6-20', texto: 'Dos descendentes de Cam vieram povos como os egípcios e os cananeus. Entre eles estava Ninrode, um guerreiro e caçador valente, que fundou cidades importantes como Babel e Nínive.',
         cena: { fundo: 'deserto', el: [{ t: 'cidade', x: 560, y: 365, w: 340 }, { t: 'piramide', x: 200, y: 360, s: .7 }, p('caim', 370, 395, { cor: '#8a3a2a', bracos: 'cima' }), { t: 'leao', x: 260, y: 400, s: .7 }, fala('Ninrode', 320, 250)] } },
-      { ref: '10:21-32', texto: 'Dos descendentes de Sem veio Éber, de quem vem o nome “hebreu”. É dessa linhagem que nascerá Abraão. A Bíblia mostra que todos os povos têm uma origem comum e que Deus se importa com todas as nações.',
+      { ref: '10:21-32', texto: 'Dos descendentes de Sem veio Héber, de quem vem o nome “hebreu”. É dessa linhagem que nascerá Abraão. A Bíblia mostra que todos os povos têm uma origem comum e que Deus se importa com todas as nações.',
         cena: { fundo: 'dia', el: [{ t: 'tenda', x: 200, y: 380 }, { t: 'tenda', x: 360, y: 384, cor: '#a8604a', s: .9 }, { t: 'tenda', x: 520, y: 380, cor: '#8a6a4a' }, p('abraao', 660, 395, { cajado: true, s: .9 }), { t: 'ovelha', x: 600, y: 405, s: .8 }] } },
     ],
     licao: 'Toda a humanidade é uma grande família. Não há povo superior a outro: todos descendem dos mesmos pais e são amados por Deus.',
     pergunta: 'Como saber que todos temos uma origem comum muda a forma como tratamos pessoas de outros povos e culturas?',
-    versiculo: 'Destas famílias se espalharam as nações pela terra depois do dilúvio. (Gênesis 10:32, paráfrase)',
+    versiculo: '10:32',
   };
 
   C[11] = {
@@ -244,7 +246,7 @@
     ],
     licao: 'O orgulho humano tenta construir sem Deus e ficar famoso pelos próprios meios. Deus resiste ao orgulho, mas já estava preparando uma família por meio da qual abençoaria todos os povos.',
     pergunta: 'Que “torres” as pessoas constroem hoje para se sentirem grandes? O que acontece quando deixamos Deus de fora dos nossos planos?',
-    versiculo: 'Por isso foi chamada Babel, porque ali o Senhor confundiu a língua de toda a terra. (Gênesis 11:9, paráfrase)',
+    versiculo: '11:9',
   };
 
   C[12] = {
@@ -260,7 +262,7 @@
     ],
     licao: 'Fé é obedecer sem ver o caminho inteiro. Abrão tinha medo e errou, mas Deus continuou fiel à promessa e protegeu sua família.',
     pergunta: 'O que você precisaria “deixar para trás” para seguir a Deus com mais confiança?',
-    versiculo: 'Em você serão abençoadas todas as famílias da terra. (Gênesis 12:3)',
+    versiculo: '12:3',
   };
 
   C[13] = {
@@ -277,7 +279,7 @@
     ],
     licao: 'Abrão preferiu a paz à vantagem e confiou que Deus cuidaria dele. Ló escolheu pelo que os olhos viam, e isso o levou para perto do perigo.',
     pergunta: 'Você costuma escolher pelo que parece melhor na hora ou pelo que agrada a Deus?',
-    versiculo: 'Não haja contenda entre mim e você, pois somos irmãos. (Gênesis 13:8, paráfrase)',
+    versiculo: '13:8',
   };
 
   C[14] = {
@@ -293,7 +295,7 @@
     ],
     licao: 'Abrão foi corajoso para ajudar quem estava em perigo, mesmo que Ló tivesse feito escolhas ruins. E reconheceu que toda vitória e riqueza vêm de Deus.',
     pergunta: 'Abrão recusou o presente do rei de Sodoma. Há ofertas que parecem boas mas comprometem nossa confiança em Deus?',
-    versiculo: 'Bendito seja o Deus Altíssimo, que entregou os seus inimigos nas suas mãos. (Gênesis 14:20, paráfrase)',
+    versiculo: '14:20',
   };
 
   C[15] = {
@@ -309,7 +311,7 @@
     ],
     licao: 'Ser justo diante de Deus não depende de merecimento, mas de confiar nele. Abrão creu numa promessa impossível e foi aceito por Deus por causa da sua fé.',
     pergunta: 'Qual promessa de Deus parece difícil de acreditar para você hoje?',
-    versiculo: 'Abrão creu no Senhor, e isso lhe foi atribuído como justiça. (Gênesis 15:6)',
+    versiculo: '15:6',
   };
 
   C[16] = {
@@ -325,7 +327,7 @@
     ],
     licao: 'Tentar “ajudar Deus” do nosso jeito costuma trazer conflitos. Mas Deus vê e cuida até de quem se sente invisível e rejeitado.',
     pergunta: 'Você já se sentiu invisível? Como é saber que Deus é “o Deus que me vê”?',
-    versiculo: 'Tu és o Deus que me vê. (Gênesis 16:13)',
+    versiculo: '16:13',
   };
 
   C[17] = {
@@ -341,7 +343,7 @@
     ],
     licao: 'Deus muda nomes porque muda histórias. Para Ele nada é impossível, nem mesmo uma promessa que parece engraçada de tão improvável.',
     pergunta: 'Se Deus te desse um nome novo que descrevesse o que Ele quer fazer na sua vida, qual seria?',
-    versiculo: 'Eu sou o Deus Todo-Poderoso; ande na minha presença e seja íntegro. (Gênesis 17:1)',
+    versiculo: '17:1',
   };
 
   C[18] = {
@@ -359,7 +361,7 @@
     ],
     licao: 'Deus valoriza a hospitalidade e ouve com paciência quem intercede pelos outros. Nada é difícil demais para Ele.',
     pergunta: 'Por quem você poderia “interceder” como Abraão fez por Sodoma?',
-    versiculo: 'Existe alguma coisa difícil demais para o Senhor? (Gênesis 18:14)',
+    versiculo: '18:14',
   };
 
   C[19] = {
@@ -379,7 +381,7 @@
     ],
     licao: 'Deus é paciente, mas julga o mal. Ele também é misericordioso: puxou Ló pela mão. A esposa de Ló nos lembra de não ficar presos ao passado do qual Deus nos tirou.',
     pergunta: 'Há algo do “passado” que Deus te tirou e que às vezes você ainda deseja olhar para trás?',
-    versiculo: 'Lembrem-se da mulher de Ló! (Lucas 17:32, citando Gênesis 19:26)',
+    versiculo: '19:26',
   };
 
   C[20] = {
@@ -393,7 +395,7 @@
     ],
     licao: 'Até homens de fé repetem erros por medo. Ainda assim, Deus protege suas promessas e trabalha apesar de nossas falhas.',
     pergunta: 'Qual medo costuma te levar a “meias verdades”? Como a confiança em Deus pode mudar isso?',
-    versiculo: 'Abraão orou a Deus, e Deus curou Abimeleque. (Gênesis 20:17, paráfrase)',
+    versiculo: '20:17',
   };
 
   C[21] = {
@@ -409,7 +411,7 @@
     ],
     licao: 'As promessas de Deus podem demorar, mas não falham. E Deus cuida também de quem parece estar “fora” da história principal, como Agar e Ismael.',
     pergunta: 'Qual promessa ou oração atendida já te fez “rir de alegria” como Sara?',
-    versiculo: 'O Senhor visitou Sara, como tinha dito, e fez como havia prometido. (Gênesis 21:1)',
+    versiculo: '21:1',
   };
 
   C[22] = {
@@ -420,12 +422,12 @@
         cena: { fundo: 'montanha', el: [p('abraao', 330, 400, { velho: true, anim: 'andar' }), p('isaque', 410, 400, { barba: false, s: .85, anim: 'andar' }), { t: 'feixe', x: 430, y: 330, s: .5 }, fala('Pai, onde está o cordeiro?', 440, 240), fala('Deus proverá, meu filho.', 90, 230)] } },
       { ref: '22:9-12', texto: 'No alto do monte, Abraão construiu o altar e arrumou a lenha. Quando levantou a mão, o Anjo do Senhor gritou do céu: “Abraão! Abraão! Não faça nada ao menino! Agora sei que você teme a Deus, pois não me negou seu único filho.”',
         cena: { fundo: 'montanha', el: [luz(400, -40), { t: 'altar', x: 400, y: 395, fogo: false }, p('isaque', 400, 340, { barba: false, s: .7, bracos: 'orando' }), p('abraao', 290, 400, { velho: true, bracos: 'cima' }), fala('Abraão! Pare!', 470, 150)] } },
-      { ref: '22:13-19', texto: 'Abraão olhou e viu um carneiro preso pelos chifres num arbusto. Ele o ofereceu no lugar do filho e chamou o lugar de “O Senhor Proverá”. Deus renovou a promessa: por meio da descendência de Abraão, todas as nações seriam abençoadas.',
+      { ref: '22:13-24', texto: 'Abraão olhou e viu um carneiro preso pelos chifres num arbusto. Ele o ofereceu no lugar do filho e chamou o lugar de “O Senhor Proverá”. Deus renovou a promessa: por meio da descendência de Abraão, todas as nações seriam abençoadas. Depois, Abraão recebeu notícias da família do seu irmão Naor, onde havia nascido Rebeca, que logo entraria nesta história.',
         cena: { fundo: 'montanha', el: [{ t: 'altar', x: 330, y: 395 }, { t: 'arvore', x: 560, y: 390, s: .6, cor: '#5a7a3a' }, { t: 'ovelha', x: 540, y: 400, chifres: true, anim: 'surgir' }, p('abraao', 200, 400, { velho: true, bracos: 'cima' }), p('isaque', 420, 400, { barba: false, s: .85, bracos: 'aberto' }), { t: 'rotulo', texto: 'O Senhor Proverá', x: 20, y: 20 }] } },
     ],
     licao: 'Abraão confiou que Deus era bom mesmo diante do pedido mais difícil. Deus proveu um substituto. Séculos depois, Jesus seria chamado de “Cordeiro de Deus”, oferecido em nosso lugar.',
     pergunta: 'O que você ama tanto que seria difícil entregar a Deus? Você confia que Ele proverá?',
-    versiculo: 'Deus mesmo proverá o cordeiro. (Gênesis 22:8)',
+    versiculo: '22:8',
   };
 
   C[23] = {
@@ -439,7 +441,7 @@
     ],
     licao: 'A fé não elimina a dor do luto. Abraão chorou, mas também agiu com esperança, comprando um pedaço da terra que Deus tinha prometido.',
     pergunta: 'Como a esperança nas promessas de Deus nos ajuda a enfrentar a perda de quem amamos?',
-    versiculo: 'Abraão veio lamentar Sara e chorar por ela. (Gênesis 23:2, paráfrase)',
+    versiculo: '23:2',
   };
 
   C[24] = {
@@ -457,7 +459,7 @@
     ],
     licao: 'Deus guia quem ora e espera nele. A disposição de Rebeca em servir e sua coragem em dizer “eu irei” fizeram dela parte da história da promessa.',
     pergunta: 'Em que decisão importante você tem pedido direção a Deus? Como você reconhece a resposta dele?',
-    versiculo: 'Bendito seja o Senhor, que me guiou no caminho. (Gênesis 24:27, paráfrase)',
+    versiculo: '24:27',
   };
 
   C[25] = {
@@ -473,7 +475,7 @@
     ],
     licao: 'Esaú desprezou algo precioso por uma vontade passageira. Às vezes trocamos o que é eterno pelo que é imediato.',
     pergunta: 'O que é valioso na sua vida que você corre o risco de trocar por algo passageiro?',
-    versiculo: 'Assim Esaú desprezou o seu direito de primogenitura. (Gênesis 25:34)',
+    versiculo: '25:34',
   };
 
   C[26] = {
@@ -489,7 +491,7 @@
     ],
     licao: 'Isaque escolheu a mansidão em vez da briga, e Deus abriu espaço para ele. Quem confia em Deus não precisa lutar por cada poço.',
     pergunta: 'Diante de uma injustiça, quando é sábio “cavar outro poço” em vez de brigar?',
-    versiculo: 'Agora o Senhor nos deu espaço, e prosperaremos na terra. (Gênesis 26:22, paráfrase)',
+    versiculo: '26:22',
   };
 
   C[27] = {
@@ -506,7 +508,7 @@
     ],
     licao: 'Enganar para conseguir o que queremos sempre deixa feridas: aqui, uma família dividida. Ainda assim, Deus seguiria trabalhando com Jacó para transformá-lo.',
     pergunta: 'Você já tentou conseguir algo bom do jeito errado? Quais foram as consequências?',
-    versiculo: 'A voz é de Jacó, mas as mãos são de Esaú. (Gênesis 27:22)',
+    versiculo: '27:22',
   };
 
   C[28] = {
@@ -523,7 +525,7 @@
     ],
     licao: 'Deus encontra Jacó não quando ele merecia, mas quando estava sozinho e fugindo. Não há lugar longe demais para Deus.',
     pergunta: 'Em que momento difícil você percebeu, depois, que Deus estava presente?',
-    versiculo: 'Estou com você e o guardarei por onde quer que for. (Gênesis 28:15, paráfrase)',
+    versiculo: '28:15',
   };
 
   C[29] = {
@@ -539,7 +541,7 @@
     ],
     licao: 'Jacó experimentou o próprio veneno quando foi enganado. E Deus mostrou seu cuidado por Lia, a menos amada: Ele vê quem se sente rejeitado.',
     pergunta: 'Lia passou da busca por aprovação para o louvor. O que muda quando deixamos de buscar a aprovação dos outros?',
-    versiculo: 'Desta vez louvarei ao Senhor. (Gênesis 29:35)',
+    versiculo: '29:35',
   };
 
   C[30] = {
@@ -556,7 +558,7 @@
     ],
     licao: 'Comparação e competição trazem tristeza, mesmo dentro de casa. Deus ouve as orações e abençoa, apesar das famílias complicadas.',
     pergunta: 'Onde a comparação com outras pessoas tem roubado sua alegria?',
-    versiculo: 'Deus se lembrou de Raquel, ouviu-a e lhe permitiu ter filhos. (Gênesis 30:22, paráfrase)',
+    versiculo: '30:22',
   };
 
   C[31] = {
@@ -567,12 +569,12 @@
         cena: { fundo: 'aurora', el: [{ t: 'camelo', x: 200, y: 400, anim: 'andar' }, { t: 'camelo', x: 320, y: 405, anim: 'andar', s: .9 }, p('raquel', 420, 395, { anim: 'andar' }), p('lia', 490, 395, { anim: 'andar' }), p('jaco', 570, 395, { anim: 'andar' }), { t: 'ovelha', x: 670, y: 405, anim: 'andar' }] } },
       { ref: '31:22-42', texto: 'Labão perseguiu Jacó por sete dias. Mas Deus o avisou num sonho para não fazer mal a Jacó. Quando o alcançou, Labão procurou os ídolos e não achou, porque Raquel estava sentada sobre eles. Jacó desabafou: “Trabalhei vinte anos para você, e você mudou meu salário dez vezes!”',
         cena: { fundo: 'montanha', el: [p('labao', 520, 400, { espelho: true, bracos: 'aberto' }), p('jaco', 320, 400, { bracos: 'aberto' }), { t: 'camelo', x: 160, y: 405 }, p('raquel', 170, 340, { s: .7 }), fala('20 anos de trabalho!', 120, 220)] } },
-      { ref: '31:43-55', texto: 'No fim, os dois fizeram um acordo de paz e empilharam pedras como testemunha. Chamaram o lugar de Mispa, dizendo: “Que o Senhor vigie entre mim e você quando estivermos longe um do outro.” Labão beijou as filhas e netos e voltou para casa.',
-        cena: { fundo: 'montanha', el: [{ t: 'pedras', x: 400, y: 400, anim: 'surgir' }, p('jaco', 290, 400, { bracos: 'frente' }), p('labao', 510, 400, { espelho: true, bracos: 'frente' }), { t: 'rotulo', texto: 'Mispa', x: 20, y: 20 }] } },
+      { ref: '31:43-55', texto: 'No fim, os dois fizeram um acordo de paz e empilharam pedras como testemunha. Chamaram o lugar de Mispá, dizendo: “Que o Senhor vigie entre mim e você quando estivermos longe um do outro.” Labão beijou as filhas e netos e voltou para casa.',
+        cena: { fundo: 'montanha', el: [{ t: 'pedras', x: 400, y: 400, anim: 'surgir' }, p('jaco', 290, 400, { bracos: 'frente' }), p('labao', 510, 400, { espelho: true, bracos: 'frente' }), { t: 'rotulo', texto: 'Mispá', x: 20, y: 20 }] } },
     ],
     licao: 'Deus protegeu Jacó mesmo de quem queria prejudicá-lo. Conflitos antigos podem terminar em acordos de paz quando Deus é colocado como testemunha.',
     pergunta: 'Há algum conflito na sua vida que precisa de um “acordo de paz” com Deus como testemunha?',
-    versiculo: 'Que o Senhor vigie entre mim e você quando estivermos separados. (Gênesis 31:49, paráfrase)',
+    versiculo: '31:49',
   };
 
   C[32] = {
@@ -588,7 +590,7 @@
     ],
     licao: 'Jacó, o esperto que sempre lutou para vencer, agora agarra Deus e pede bênção. Às vezes Deus nos “quebra” para nos transformar.',
     pergunta: 'Por que você acha que Jacó saiu mancando? Que “marca” de um encontro com Deus você carrega?',
-    versiculo: 'Não te deixarei ir se não me abençoares. (Gênesis 32:26)',
+    versiculo: '32:26',
   };
 
   C[33] = {
@@ -604,7 +606,7 @@
     ],
     licao: 'O perdão é possível, mesmo depois de muitos anos e de grandes feridas. Deus preparou o coração dos dois irmãos para a reconciliação.',
     pergunta: 'Existe alguém com quem você precisa se reconciliar? Qual seria o primeiro passo?',
-    versiculo: 'Esaú correu ao seu encontro, abraçou-o e beijou-o; e choraram. (Gênesis 33:4, paráfrase)',
+    versiculo: '33:4',
   };
 
   C[34] = {
@@ -618,7 +620,7 @@
     ],
     licao: 'A Bíblia não esconde as tragédias humanas. A violência contra Diná foi grave, e a vingança desmedida também. A justiça de verdade não se faz com engano e massacre.',
     pergunta: 'Por que a vingança costuma gerar ainda mais dor? Como buscar justiça sem cometer novos males?',
-    versiculo: 'Não se vinguem, amados; deixem com Deus a justiça. (Romanos 12:19, paráfrase, à luz de Gênesis 34)',
+    versiculo: '34:30',
   };
 
   C[35] = {
@@ -634,7 +636,7 @@
     ],
     licao: 'Voltar a Deus envolve abandonar o que ocupa o lugar dele. Na mesma estrada, há promessa renovada e luto: a vida com Deus inclui alegrias e dores.',
     pergunta: 'Que “ídolos” (coisas que ocupam o lugar de Deus) você precisa enterrar hoje?',
-    versiculo: 'Vamos subir a Betel, ao Deus que me respondeu no dia da minha angústia. (Gênesis 35:3, paráfrase)',
+    versiculo: '35:3',
   };
 
   C[36] = {
@@ -648,7 +650,7 @@
     ],
     licao: 'Deus cumpre todas as suas palavras, até as que parecem secundárias. A história de Esaú continua, e nenhuma família é esquecida por Ele.',
     pergunta: 'Por que você acha que a Bíblia registra também a família de Esaú?',
-    versiculo: 'Esaú é Edom. (Gênesis 36:8)',
+    versiculo: '36:8',
   };
 
   C[37] = {
@@ -669,7 +671,7 @@
     ],
     licao: 'Favoritismo, inveja e ódio destruíram a família de Jacó. Mas, mesmo quando tudo parece perdido, Deus está escrevendo uma história maior que ainda não conseguimos ver.',
     pergunta: 'O ciúme levou os irmãos a fazer algo terrível. Como lidar com a inveja antes que ela cresça?',
-    versiculo: 'Lá vem o sonhador! (Gênesis 37:19)',
+    versiculo: '37:19',
   };
 
   C[38] = {
@@ -685,7 +687,7 @@
     ],
     licao: 'A Bíblia mostra gente real, com erros reais. Judá começa a mudar quando admite sua culpa. E Deus inclui pessoas inesperadas na linhagem do Messias.',
     pergunta: 'Por que é tão importante reconhecer “ele/ela é mais justo do que eu” quando erramos?',
-    versiculo: 'Ela é mais justa do que eu. (Gênesis 38:26)',
+    versiculo: '38:26',
   };
 
   C[39] = {
@@ -701,7 +703,7 @@
     ],
     licao: 'A presença de Deus não depende do lugar: estava com José na casa de Potifar e na prisão. Ser fiel às vezes custa caro, mas Deus honra quem foge do pecado.',
     pergunta: 'José fugiu da tentação. Que tentações hoje pedem que a gente simplesmente “saia correndo”?',
-    versiculo: 'O Senhor estava com José e o fazia prosperar. (Gênesis 39:2, paráfrase)',
+    versiculo: '39:2',
   };
 
   C[40] = {
@@ -717,12 +719,12 @@
     ],
     licao: 'José continuou servindo e ajudando os outros mesmo injustiçado. Pessoas podem nos esquecer, mas Deus nunca esquece.',
     pergunta: 'Como continuar fazendo o bem quando ninguém parece reconhecer?',
-    versiculo: 'As interpretações pertencem a Deus. (Gênesis 40:8)',
+    versiculo: '40:8',
   };
 
   C[41] = {
     titulo: 'José interpreta os sonhos do faraó',
-    personagens: ['Faraó', 'José', 'O copeiro', 'Asenate', 'Manassés e Efraim'],
+    personagens: ['Faraó', 'José', 'O copeiro', 'Azenate', 'Manassés e Efraim'],
     cenas: [
       { ref: '41:1-8', texto: 'Dois anos depois, o faraó teve dois sonhos. No primeiro, sete vacas gordas saíam do rio Nilo e depois sete vacas magras e feias as devoravam. No segundo, sete espigas cheias eram engolidas por sete espigas secas. Nenhum sábio do Egito soube explicar.',
         cena: { fundo: 'egito', el: [{ t: 'vaca', x: 150, y: 380 }, { t: 'vaca', x: 250, y: 385, s: .9 }, { t: 'vaca', x: 470, y: 380, magra: true, espelho: true }, { t: 'vaca', x: 570, y: 385, magra: true, espelho: true, s: .9 },
@@ -737,7 +739,7 @@
     ],
     licao: 'Do poço à prisão e da prisão ao palácio: no tempo certo, Deus exaltou José. Os anos difíceis o prepararam para salvar muitas vidas.',
     pergunta: 'Que “anos de espera” na sua vida podem estar sendo preparação para algo maior?',
-    versiculo: 'Deus me fez prosperar na terra do meu sofrimento. (Gênesis 41:52, paráfrase)',
+    versiculo: '41:52',
   };
 
   C[42] = {
@@ -753,7 +755,7 @@
     ],
     licao: 'A consciência dos irmãos despertou depois de mais de vinte anos. Deus estava usando aquele teste para trabalhar no coração deles.',
     pergunta: 'Por que você acha que José não se revelou logo de cara?',
-    versiculo: 'Na verdade, somos culpados pelo que fizemos ao nosso irmão. (Gênesis 42:21, paráfrase)',
+    versiculo: '42:21',
   };
 
   C[43] = {
@@ -769,7 +771,7 @@
     ],
     licao: 'Judá, que antes vendeu um irmão, agora se oferece para proteger outro. Deus transforma o coração das pessoas com o tempo.',
     pergunta: 'Você percebe mudanças no seu caráter ao longo dos anos? Quais?',
-    versiculo: 'Que o Deus Todo-Poderoso lhes conceda misericórdia. (Gênesis 43:14, paráfrase)',
+    versiculo: '43:14',
   };
 
   C[44] = {
@@ -783,7 +785,7 @@
     ],
     licao: 'O irmão que vendeu José agora se oferece como substituto de Benjamim. Essa atitude aponta para Jesus, descendente de Judá, que se ofereceu em nosso lugar.',
     pergunta: 'O que significa amar alguém a ponto de tomar o lugar dele?',
-    versiculo: 'Deixe o seu servo ficar como escravo no lugar do menino. (Gênesis 44:33, paráfrase)',
+    versiculo: '44:33',
   };
 
   C[45] = {
@@ -799,7 +801,7 @@
     ],
     licao: 'José viu a mão de Deus por trás de tudo o que sofreu. O perdão não apaga o mal feito, mas permite que Deus transforme a história em salvação.',
     pergunta: 'Como olhar para uma dor do passado e enxergar o que Deus fez com ela?',
-    versiculo: 'Foi Deus quem me enviou adiante de vocês, para preservar a vida. (Gênesis 45:5, paráfrase)',
+    versiculo: '45:5',
   };
 
   C[46] = {
@@ -815,7 +817,7 @@
     ],
     licao: 'Deus não apenas manda, Ele vai junto. A família de Jacó desceu ao Egito sabendo que Deus estaria com eles e que a promessa continuava.',
     pergunta: 'Que mudança grande você está enfrentando? Como a promessa “eu irei com você” te encoraja?',
-    versiculo: 'Eu mesmo descerei com você ao Egito e certamente o farei voltar. (Gênesis 46:4, paráfrase)',
+    versiculo: '46:4',
   };
 
   C[47] = {
@@ -831,7 +833,7 @@
     ],
     licao: 'José foi um administrador sábio numa crise. E Jacó, mesmo no Egito, manteve o coração voltado para a promessa de Deus.',
     pergunta: 'Onde está o seu coração: no conforto de agora ou nas promessas de Deus?',
-    versiculo: 'Você nos salvou a vida. (Gênesis 47:25, paráfrase)',
+    versiculo: '47:25',
   };
 
   C[48] = {
@@ -846,7 +848,7 @@
     ],
     licao: 'Na Bíblia, Deus muitas vezes escolhe o mais novo ou o menos esperado: Abel, Isaque, Jacó, José, Efraim. A bênção é presente da graça, não direito por ordem de nascimento.',
     pergunta: 'Você já se sentiu “o menos provável” para ser usado por Deus?',
-    versiculo: 'O Deus que tem sido o meu pastor durante toda a minha vida abençoe estes meninos. (Gênesis 48:15-16, paráfrase)',
+    versiculo: '48:15-16',
   };
 
   C[49] = {
@@ -864,7 +866,7 @@
     ],
     licao: 'As palavras finais de Jacó mostram que Deus conhece o futuro de cada família. Da tribo de Judá viria o Rei prometido.',
     pergunta: 'Que “bênção” ou palavra você gostaria de deixar para quem vem depois de você?',
-    versiculo: 'O cetro não se afastará de Judá, até que venha aquele a quem os povos obedecerão. (Gênesis 49:10, paráfrase)',
+    versiculo: '49:10',
   };
 
   C[50] = {
@@ -881,7 +883,7 @@
     ],
     licao: 'Este é o resumo de Gênesis: as pessoas falham, o mal acontece, mas Deus é soberano e fiel. Ele transforma até o mal em bem e sempre cumpre suas promessas.',
     pergunta: 'Que situação da sua vida você precisa entregar a Deus, confiando que Ele pode transformá-la em bem?',
-    versiculo: 'Vocês planejaram o mal contra mim, mas Deus o tornou em bem. (Gênesis 50:20)',
+    versiculo: '50:20',
   };
 
   CONTEUDO.registrar('genesis', {

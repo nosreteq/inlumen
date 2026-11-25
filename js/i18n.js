@@ -80,6 +80,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'Pentateuco (Lei)', 'secao.historicos': 'Livros Históricos', 'secao.poeticos': 'Poéticos e Sapienciais', 'secao.profMaiores': 'Profetas Maiores', 'secao.profMenores': 'Profetas Menores',
       'secao.evangelhos': 'Evangelhos', 'secao.historicoNT': 'Histórico', 'secao.paulinas': 'Cartas de Paulo', 'secao.gerais': 'Cartas Gerais', 'secao.profeticoNT': 'Profético',
       'alt.capa': 'Ilustração: um patriarca diante da tenda ao amanhecer', 'alt.livro': 'Ilustração do livro de {livro}',
+      'cap.lerBiblia': "Ler {ref} na Bíblia", 'biblia.carregando': "Carregando o texto bíblico…", 'biblia.erro': "Não foi possível carregar o texto bíblico.", 'rodape.biblia': "Texto bíblico:",
+      'sobre.h3': "Texto bíblico", 'sobre.p4': "O texto bíblico de referência do portal é a {versao}, uma atualização da tradução de João Ferreira de Almeida. Em cada cena, o botão “Ler na Bíblia” mostra os versículos completos, e “Para guardar” traz a citação literal.",
     },
 
     en: {
@@ -122,6 +124,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'Pentateuch (Law)', 'secao.historicos': 'Historical Books', 'secao.poeticos': 'Poetry and Wisdom', 'secao.profMaiores': 'Major Prophets', 'secao.profMenores': 'Minor Prophets',
       'secao.evangelhos': 'Gospels', 'secao.historicoNT': 'History', 'secao.paulinas': 'Letters of Paul', 'secao.gerais': 'General Letters', 'secao.profeticoNT': 'Prophecy',
       'alt.capa': 'Illustration: a patriarch in front of his tent at dawn', 'alt.livro': 'Illustration for the book of {livro}',
+      'cap.lerBiblia': "Read {ref} in the Bible", 'biblia.carregando': "Loading the Bible text…", 'biblia.erro': "Could not load the Bible text.", 'rodape.biblia': "Bible text:",
+      'sobre.h3': "Bible text", 'sobre.p4': "The portal’s reference Bible text is the {versao}, an update of João Ferreira de Almeida’s Portuguese translation. In each scene, “Read in the Bible” shows the full verses, and “To remember” quotes the text literally. For now the Bible text is shown in Portuguese.",
     },
 
     es: {
@@ -164,6 +168,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'Pentateuco (Ley)', 'secao.historicos': 'Libros Históricos', 'secao.poeticos': 'Poéticos y Sapienciales', 'secao.profMaiores': 'Profetas Mayores', 'secao.profMenores': 'Profetas Menores',
       'secao.evangelhos': 'Evangelios', 'secao.historicoNT': 'Histórico', 'secao.paulinas': 'Cartas de Pablo', 'secao.gerais': 'Cartas Generales', 'secao.profeticoNT': 'Profético',
       'alt.capa': 'Ilustración: un patriarca frente a su tienda al amanecer', 'alt.livro': 'Ilustración del libro de {livro}',
+      'cap.lerBiblia': "Leer {ref} en la Biblia", 'biblia.carregando': "Cargando el texto bíblico…", 'biblia.erro': "No se pudo cargar el texto bíblico.", 'rodape.biblia': "Texto bíblico:",
+      'sobre.h3': "Texto bíblico", 'sobre.p4': "El texto bíblico de referencia del portal es la {versao}, una actualización de la traducción portuguesa de João Ferreira de Almeida. En cada escena, «Leer en la Biblia» muestra los versículos completos y «Para recordar» cita el texto literal. Por ahora, el texto bíblico se muestra en portugués.",
     },
 
     fr: {
@@ -206,6 +212,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'Pentateuque (Loi)', 'secao.historicos': 'Livres historiques', 'secao.poeticos': 'Poétiques et sapientiaux', 'secao.profMaiores': 'Grands prophètes', 'secao.profMenores': 'Petits prophètes',
       'secao.evangelhos': 'Évangiles', 'secao.historicoNT': 'Historique', 'secao.paulinas': 'Lettres de Paul', 'secao.gerais': 'Lettres générales', 'secao.profeticoNT': 'Prophétique',
       'alt.capa': 'Illustration : un patriarche devant sa tente à l’aube', 'alt.livro': 'Illustration du livre de {livro}',
+      'cap.lerBiblia': "Lire {ref} dans la Bible", 'biblia.carregando': "Chargement du texte biblique…", 'biblia.erro': "Impossible de charger le texte biblique.", 'rodape.biblia': "Texte biblique :",
+      'sobre.h3': "Texte biblique", 'sobre.p4': "Le texte biblique de référence du portail est la {versao}, une mise à jour de la traduction portugaise de João Ferreira de Almeida. Dans chaque scène, « Lire dans la Bible » affiche les versets complets et « À retenir » cite le texte littéral. Pour l’instant, le texte biblique est affiché en portugais.",
     },
 
     de: {
@@ -248,6 +256,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'Pentateuch (Gesetz)', 'secao.historicos': 'Geschichtsbücher', 'secao.poeticos': 'Lehr- und Weisheitsbücher', 'secao.profMaiores': 'Große Propheten', 'secao.profMenores': 'Kleine Propheten',
       'secao.evangelhos': 'Evangelien', 'secao.historicoNT': 'Geschichte', 'secao.paulinas': 'Paulusbriefe', 'secao.gerais': 'Allgemeine Briefe', 'secao.profeticoNT': 'Prophetie',
       'alt.capa': 'Illustration: ein Patriarch vor seinem Zelt im Morgengrauen', 'alt.livro': 'Illustration zum Buch {livro}',
+      'cap.lerBiblia': "{ref} in der Bibel lesen", 'biblia.carregando': "Bibeltext wird geladen…", 'biblia.erro': "Der Bibeltext konnte nicht geladen werden.", 'rodape.biblia': "Bibeltext:",
+      'sobre.h3': "Bibeltext", 'sobre.p4': "Der Referenz-Bibeltext des Portals ist die {versao}, eine Überarbeitung der portugiesischen Übersetzung von João Ferreira de Almeida. In jeder Szene zeigt „In der Bibel lesen“ die vollständigen Verse, und „Zum Merken“ zitiert den Text wörtlich. Vorerst wird der Bibeltext auf Portugiesisch angezeigt.",
     },
 
     it: {
@@ -290,6 +300,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'Pentateuco (Legge)', 'secao.historicos': 'Libri storici', 'secao.poeticos': 'Poetici e sapienziali', 'secao.profMaiores': 'Profeti maggiori', 'secao.profMenores': 'Profeti minori',
       'secao.evangelhos': 'Vangeli', 'secao.historicoNT': 'Storico', 'secao.paulinas': 'Lettere di Paolo', 'secao.gerais': 'Lettere cattoliche', 'secao.profeticoNT': 'Profetico',
       'alt.capa': 'Illustrazione: un patriarca davanti alla tenda all’alba', 'alt.livro': 'Illustrazione del libro di {livro}',
+      'cap.lerBiblia': "Leggi {ref} nella Bibbia", 'biblia.carregando': "Caricamento del testo biblico…", 'biblia.erro': "Impossibile caricare il testo biblico.", 'rodape.biblia': "Testo biblico:",
+      'sobre.h3': "Testo biblico", 'sobre.p4': "Il testo biblico di riferimento del portale è la {versao}, un aggiornamento della traduzione portoghese di João Ferreira de Almeida. In ogni scena, «Leggi nella Bibbia» mostra i versetti completi e «Da ricordare» cita il testo letterale. Per ora il testo biblico è mostrato in portoghese.",
     },
 
     ru: {
@@ -332,6 +344,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'Пятикнижие (Закон)', 'secao.historicos': 'Исторические книги', 'secao.poeticos': 'Учительные книги', 'secao.profMaiores': 'Большие пророки', 'secao.profMenores': 'Малые пророки',
       'secao.evangelhos': 'Евангелия', 'secao.historicoNT': 'Историческая книга', 'secao.paulinas': 'Послания Павла', 'secao.gerais': 'Соборные послания', 'secao.profeticoNT': 'Пророческая книга',
       'alt.capa': 'Иллюстрация: патриарх у шатра на рассвете', 'alt.livro': 'Иллюстрация к книге {livro}',
+      'cap.lerBiblia': "Читать {ref} в Библии", 'biblia.carregando': "Загрузка библейского текста…", 'biblia.erro': "Не удалось загрузить библейский текст.", 'rodape.biblia': "Библейский текст:",
+      'sobre.h3': "Библейский текст", 'sobre.p4': "Основной библейский текст портала — {versao}, обновлённый португальский перевод Жуана Феррейры де Алмейды. В каждой сцене кнопка «Читать в Библии» показывает стихи полностью, а «Запомнить» приводит дословную цитату. Пока библейский текст показан на португальском.",
     },
 
     'zh-CN': {
@@ -374,6 +388,8 @@ window.I18N = (function () {
       'secao.pentateuco': '摩西五经（律法书）', 'secao.historicos': '历史书', 'secao.poeticos': '诗歌智慧书', 'secao.profMaiores': '大先知书', 'secao.profMenores': '小先知书',
       'secao.evangelhos': '福音书', 'secao.historicoNT': '历史书', 'secao.paulinas': '保罗书信', 'secao.gerais': '普通书信', 'secao.profeticoNT': '预言书',
       'alt.capa': '插图：黎明时分站在帐篷前的族长', 'alt.livro': '{livro}的插图',
+      'cap.lerBiblia': "在圣经中阅读{ref}", 'biblia.carregando': "正在加载经文…", 'biblia.erro': "无法加载经文。", 'rodape.biblia': "经文：",
+      'sobre.h3': "经文", 'sobre.p4': "本网站的参考经文为{versao}，是若昂·费雷拉·德·阿尔梅达葡萄牙语译本的修订版。每一幕中，“在圣经中阅读”会显示完整经文，“记住”则引用原文。目前经文以葡萄牙语显示。",
     },
 
     ja: {
@@ -416,6 +432,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'モーセ五書（律法）', 'secao.historicos': '歴史書', 'secao.poeticos': '詩歌・知恵文学', 'secao.profMaiores': '大預言書', 'secao.profMenores': '小預言書',
       'secao.evangelhos': '福音書', 'secao.historicoNT': '歴史書', 'secao.paulinas': 'パウロ書簡', 'secao.gerais': '公同書簡', 'secao.profeticoNT': '預言書',
       'alt.capa': 'イラスト：夜明けに天幕の前に立つ族長', 'alt.livro': '{livro}のイラスト',
+      'cap.lerBiblia': "聖書で{ref}を読む", 'biblia.carregando': "聖書本文を読み込み中…", 'biblia.erro': "聖書本文を読み込めませんでした。", 'rodape.biblia': "聖書本文：",
+      'sobre.h3': "聖書本文", 'sobre.p4': "このサイトの参照聖書本文は{versao}で、ジョアン・フェレイラ・デ・アルメイダによるポルトガル語訳の改訂版です。各シーンの「聖書で読む」で節全体を表示し、「覚えよう」では本文をそのまま引用します。現在、聖書本文はポルトガル語で表示されます。",
     },
 
     hi: {
@@ -458,6 +476,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'पंचग्रंथ (व्यवस्था)', 'secao.historicos': 'ऐतिहासिक पुस्तकें', 'secao.poeticos': 'काव्य और ज्ञान', 'secao.profMaiores': 'बड़े भविष्यवक्ता', 'secao.profMenores': 'छोटे भविष्यवक्ता',
       'secao.evangelhos': 'सुसमाचार', 'secao.historicoNT': 'इतिहास', 'secao.paulinas': 'पौलुस की पत्रियाँ', 'secao.gerais': 'सामान्य पत्रियाँ', 'secao.profeticoNT': 'भविष्यवाणी',
       'alt.capa': 'चित्र: भोर में तंबू के सामने एक कुलपिता', 'alt.livro': '{livro} पुस्तक का चित्र',
+      'cap.lerBiblia': "बाइबल में {ref} पढ़ें", 'biblia.carregando': "बाइबल पाठ लोड हो रहा है…", 'biblia.erro': "बाइबल पाठ लोड नहीं हो सका।", 'rodape.biblia': "बाइबल पाठ:",
+      'sobre.h3': "बाइबल पाठ", 'sobre.p4': "इस पोर्टल का संदर्भ बाइबल पाठ {versao} है, जो जोआओ फ़ेरेरा दे अल्मेडा के पुर्तगाली अनुवाद का अद्यतन संस्करण है। हर दृश्य में \"बाइबल में पढ़ें\" पूरे पद दिखाता है और \"याद रखें\" में मूल पाठ उद्धृत होता है। अभी बाइबल पाठ पुर्तगाली में दिखाया जाता है।",
     },
 
     ar: {
@@ -500,6 +520,8 @@ window.I18N = (function () {
       'secao.pentateuco': 'أسفار موسى الخمسة (الشريعة)', 'secao.historicos': 'الأسفار التاريخية', 'secao.poeticos': 'الأسفار الشعرية والحكمية', 'secao.profMaiores': 'الأنبياء الكبار', 'secao.profMenores': 'الأنبياء الصغار',
       'secao.evangelhos': 'الأناجيل', 'secao.historicoNT': 'سفر تاريخي', 'secao.paulinas': 'رسائل بولس', 'secao.gerais': 'الرسائل الجامعة', 'secao.profeticoNT': 'سفر نبوي',
       'alt.capa': 'رسم: أحد الآباء أمام خيمته عند الفجر', 'alt.livro': 'رسم توضيحي لسفر {livro}',
+      'cap.lerBiblia': "اقرأ {ref} في الكتاب المقدس", 'biblia.carregando': "جارٍ تحميل النص الكتابي…", 'biblia.erro': "تعذّر تحميل النص الكتابي.", 'rodape.biblia': "النص الكتابي:",
+      'sobre.h3': "النص الكتابي", 'sobre.p4': "النص الكتابي المرجعي للموقع هو {versao}، وهو تحديث للترجمة البرتغالية لجواو فيريرا دي ألميدا. في كل مشهد يعرض زر «اقرأ في الكتاب المقدس» الآيات كاملة، ويقتبس قسم «للحفظ» النص حرفيًا. يُعرض النص الكتابي حاليًا بالبرتغالية.",
     },
   };
 
