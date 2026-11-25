@@ -80,6 +80,22 @@ if (!I18N || !BIBLIA || !ILUSTRA || !CONTEUDO || !TB || !VERSICULOS) {
     }
     console.log(`Texto bíblico ${info.sigla}: ${nVers} versículos verificados.`);
   }
+  /* referências cruzadas (OpenBible.info): todas precisam existir na versificação da BLIVRE */
+  let nRefs = 0;
+  for (const l of BIBLIA.livros) {
+    const rel = `biblia/referencias/${l.id}.js`;
+    if (!fs.existsSync(path.join(RAIZ, rel))) { erro(`falta ${rel}`); continue; }
+    carregar(rel);
+    const mapa = ctx.REFERENCIAS && ctx.REFERENCIAS._dados[l.id];
+    if (!mapa) { erro(`${rel}: não registrou as referências`); continue; }
+    for (const [k, lista] of Object.entries(mapa)) {
+      const e = TB.verificar(k, l.id, VERSICULOS);
+      if (e) erro(`${rel}: origem ${e}`);
+      for (const r of lista) { nRefs++; const e2 = TB.verificar(r, l.id, VERSICULOS); if (e2) erro(`${rel} ${k}: ${e2}`); }
+    }
+  }
+  console.log(`Referências cruzadas: ${nRefs} verificadas.`);
+
   for (const [idioma, sigla] of Object.entries(TB.POR_IDIOMA)) if (!TB.TRADUCOES[sigla]) erro(`biblia-texto.js: idioma ${idioma} aponta para tradução inexistente "${sigla}"`);
 
   /* i18n */
@@ -145,6 +161,10 @@ if (!I18N || !BIBLIA || !ILUSTRA || !CONTEUDO || !TB || !VERSICULOS) {
           if (!cn.ref) { avisos.push(`${onde}: cena sem referência bíblica`); continue; }
           const e = TB.verificar(cn.ref, l.id, VERSICULOS);
           if (e) erro(`${onde} cena: ${e}`);
+          if (cn.veja != null) {
+            if (!Array.isArray(cn.veja)) erro(`${onde}: "veja" deve ser uma lista de referências`);
+            else cn.veja.forEach((r) => { const ev = TB.verificar(r, l.id, VERSICULOS); if (ev) erro(`${onde} veja: ${ev}`); });
+          }
           else TB.expandir(cn.ref, l.id, VERSICULOS).forEach((x) => { if (x.livro === l.id) (cobertura[x.c] = cobertura[x.c] || new Set()).add(x.v); });
         }
         /* nomes próprios dos personagens devem existir no texto bíblico (mesma grafia) */

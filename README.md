@@ -5,6 +5,8 @@ Portal web que percorre a Bíblia de **Gênesis a Apocalipse**, capítulo por ca
 - **Sem build, sem dependências**: HTML, CSS e JavaScript puros. Funciona abrindo `index.html` ou em qualquer hospedagem estática (GitHub Pages incluído).
 - **Idioma padrão: pt-BR**, com interface pronta para 11 idiomas e suporte a RTL.
 - **Texto bíblico de referência: Bíblia Livre (BLIVRE)**, atualização da tradução de João Ferreira de Almeida (1819), versionada em `biblia/blivre/`.
+- **Leitor da Bíblia integrado**, com ligação nos dois sentidos entre a Bíblia e as histórias ilustradas, e **referências cruzadas** (OpenBible.info).
+- Histórico de mudanças: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Texto bíblico: Bíblia Livre (BLIVRE)
 
@@ -19,7 +21,25 @@ Todo o projeto usa como base a **Bíblia Livre**, uma atualização da traduçã
 
 Procedência, versão, checksum e instruções de atualização: [`biblia/blivre/LEIAME.md`](biblia/blivre/LEIAME.md).
 
-Próximos passos combinados: [`PENDENCIAS.md`](PENDENCIAS.md).
+## Leitor da Bíblia e referências cruzadas
+
+O item **Bíblia** do menu abre o texto completo da BLIVRE dentro do portal:
+
+| Rota | Tela |
+|---|---|
+| `#/biblia` | os 66 livros (🎬 = tem história ilustrada) |
+| `#/biblia/<livro>` | os capítulos (destacados quando têm história) |
+| `#/biblia/<livro>/<cap>?r=9-12` | o texto do capítulo, com os versículos de `r` destacados (aceita `22:9-12` ou `9-12`) |
+| `#/livro/<livro>/<cap>?cena=2` | a história ilustrada, já aberta numa cena |
+
+**Ligação Bíblia ↔ histórias (de-para):**
+- **Bíblia → história:** um marco "🎬 História: … · cena N" aparece no primeiro versículo de cada cena e leva direto a ela. O mapeamento sai dos campos `ref` das cenas, sem cadastro manual.
+- **História → Bíblia:** o painel "Ler na Bíblia" tem o link "Abrir no leitor da Bíblia →", e o topo do capítulo tem o botão "📖 Ler … na Bíblia".
+
+**Referências cruzadas:**
+- **No leitor:** o botão 🔗 em cada versículo mostra até 8 referências relacionadas, com o texto da BLIVRE.
+- **Nas histórias:** "🔗 Veja também" em cada cena reúne as referências mais relevantes dos versículos da cena, sem repetir trechos sobrepostos. Para fixar referências próprias numa cena, use o campo opcional `veja: ['romanos 4:3', 'galatas 3:6']`; elas aparecem primeiro e o CI valida.
+- **Fonte:** [OpenBible.info Cross References](https://www.openbible.info/labs/cross-references/), licença **CC BY**, derivada principalmente do *Treasury of Scripture Knowledge* (domínio público). O crédito aparece no rodapé, no leitor e na página "Sobre". Procedência e importação: [`biblia/referencias/LEIAME.md`](biblia/referencias/LEIAME.md).
 
 ## Status do conteúdo
 
@@ -51,7 +71,7 @@ Para validar localmente antes de abrir um PR:
 node scripts/validar.js
 ```
 
-O validador confere a sintaxe dos JS, o catálogo (66 livros e 1189 capítulos), os dicionários de i18n (chaves, variáveis e plurais), a integridade do texto bíblico (31.102 versículos) e todo o conteúdo registrado: capítulos, cenas, ilustrações, referências bíblicas, cobertura dos versículos e grafia dos nomes.
+O validador confere a sintaxe dos JS, o catálogo (66 livros e 1189 capítulos), os dicionários de i18n (chaves, variáveis e plurais), a integridade do texto bíblico (31.102 versículos), as 193.452 referências cruzadas e todo o conteúdo registrado: capítulos, cenas, ilustrações, referências bíblicas, cobertura dos versículos e grafia dos nomes.
 
 ## Skills do Claude Code
 
@@ -73,7 +93,9 @@ js/livros.js               catálogo dos 66 livros + quais idiomas têm conteúd
 js/versiculos.js           nº de versículos por capítulo (gerado a partir da BLIVRE)
 js/biblia-texto.js         carrega o texto bíblico, interpreta referências ('1:1-5'), créditos
 biblia/blivre/             Bíblia Livre: fonte original + um arquivo .js por livro
+biblia/referencias/        referências cruzadas (OpenBible.info): fonte + um arquivo .js por livro
 scripts/importar-biblia.js importa uma tradução no formato VPL (eBible.org)
+scripts/importar-referencias.js importa as referências cruzadas (OpenBible.info)
 scripts/validar.js         validação usada no CI
 js/ilustracoes.js          motor de ilustrações (fundos + ~50 elementos SVG animados)
 js/app.js                  rotas (#/, #/livro/<id>, #/livro/<id>/<cap>, #/sobre) e telas
@@ -126,6 +148,7 @@ C[1] = {
   personagens: ['Deus', 'Adão', 'Eva'],
   cenas: [
     { ref: '1:1-5', texto: 'Reconto em linguagem simples…',
+      veja: ['joao 1:1-3'],   // opcional: referências cruzadas fixas, além das automáticas
       cena: { fundo: 'trevas', el: [ { t: 'luz', x: 400, y: -40, anim: 'brilhar' }, { t: 'fala', texto: 'Haja luz!', x: 450, y: 150 } ] } },
   ],
   licao: 'Ideia central…',

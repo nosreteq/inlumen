@@ -23,20 +23,22 @@ O workflow `.github/workflows/pages.yml` valida todo PR para a `main` e, após o
 
 2. **Conferir no navegador**, se a mudança afeta a interface ou o conteúdo: sirva com `python3 -m http.server 8765` e use o Playwright já instalado para abrir as páginas alteradas. Verifique se não há erros de console e se não há rolagem horizontal no mobile (`devices['iPhone 13']`), e veja capturas de tela. Ao final, encerre o servidor.
 
-3. **Commit e push** na branch de desenvolvimento, com mensagem descritiva em português e as linhas de atribuição pedidas pela sessão. Antes, sincronize com a `main`:
+3. **Atualizar o `CHANGELOG.md`:** acrescente no topo uma nova versão com a data (formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) + [SemVer](https://semver.org/lang/pt-BR/): *minor* para funcionalidade ou conteúdo novo, *patch* para correção). Use as seções Adicionado, Alterado, Corrigido e Removido, escritas para quem usa o portal, e cite o número do PR após criá-lo.
+
+4. **Commit e push** na branch de desenvolvimento, com mensagem descritiva em português e as linhas de atribuição pedidas pela sessão. Antes, sincronize com a `main`:
    ```bash
    git fetch origin main && git merge --no-edit origin/main
    ```
 
-4. **Pull request** para a `main` (ferramenta `mcp__github__create_pull_request`), com resumo, mudanças e testes realizados.
+5. **Pull request** para a `main` (ferramenta `mcp__github__create_pull_request`), com resumo, mudanças e testes realizados.
 
-5. **Aguardar o CI do PR:** consulte as execuções com `mcp__github__actions_list` (`list_workflow_runs`, evento `pull_request`) e confira se o `head_sha` é o do último commit. Não use `sleep` solto; espere com um comando em segundo plano.
+6. **Aguardar o CI do PR:** consulte as execuções com `mcp__github__actions_list` (`list_workflow_runs`, evento `pull_request`) e confira se o `head_sha` é o do último commit. Não use `sleep` solto; espere com um comando em segundo plano.
 
-6. **Merge**, somente se o CI passou e o usuário pediu: `mcp__github__merge_pull_request` com `merge_method: "merge"` e `expectedHeadSha` do último commit.
+7. **Merge**, somente se o CI passou e o usuário pediu: `mcp__github__merge_pull_request` com `merge_method: "merge"` e `expectedHeadSha` do último commit.
 
-7. **Acompanhar o deploy:** a execução `push` na `main` tem os jobs `validar` → `empacotar` (upload do artefato) → `publicar` (deploy). Liste os jobs com `list_workflow_jobs`.
+8. **Acompanhar o deploy:** a execução `push` na `main` tem os jobs `validar` → `empacotar` (upload do artefato) → `publicar` (deploy). Liste os jobs com `list_workflow_jobs`.
 
-8. **Conferir o site:** confirme que os arquivos novos respondem com 200 (pode levar 1 a 2 minutos após o deploy):
+9. **Conferir o site:** confirme que os arquivos novos respondem com 200 (pode levar 1 a 2 minutos após o deploy):
    ```bash
    curl -s -o /dev/null -w "%{http_code}\n" https://nosreteq.github.io/inlumen/<arquivo-novo>
    ```

@@ -65,6 +65,42 @@ cite abbr { text-decoration: none; border-bottom: 1px dotted; cursor: help; }
 .credito-biblia { font-size: .8rem; margin-top: 8px; }
 .credito-biblia a { color: inherit; }
 
+/* ---------- leitor da Bíblia ---------- */
+.topo nav a.ativo { color: var(--tinta); background: var(--ouro-claro); }
+.intro-leitor { color: var(--suave); max-width: 760px; }
+.grade-biblia { display: flex; flex-wrap: wrap; gap: 8px; }
+.livro-biblia { padding: 6px 14px; border-radius: 999px; background: var(--papel); border: 1px solid var(--linha); border-inline-start: 4px solid var(--cor); text-decoration: none; font-size: .95rem; }
+.livro-biblia:hover { border-color: var(--ouro); }
+.grade-num { display: grid; grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 8px; margin: 18px 0 40px; }
+.grade-num a { display: grid; place-items: center; height: 48px; border-radius: 10px; background: var(--papel); border: 1px solid var(--linha); text-decoration: none; font-weight: 700; }
+.grade-num a:hover { border-color: var(--ouro); }
+.grade-num a.com-historia { background: var(--ouro-claro); color: var(--ouro); border-color: var(--ouro); }
+.leitor h1 .sigla { font-family: Nunito, sans-serif; font-size: .9rem; color: var(--suave); font-weight: 700; }
+.texto-leitor { background: var(--papel); border: 1px solid var(--linha); border-radius: var(--raio); padding: 22px 26px; font-family: Merriweather, Georgia, serif; font-size: 1.05rem; line-height: 1.85; }
+.verso { margin: 0 0 6px; padding: 2px 8px; border-radius: 6px; scroll-margin-top: 90px; transition: background .4s; }
+.verso.com-historia { border-inline-start: 3px solid var(--ouro-claro); }
+.verso.destaque { background: var(--ouro-claro); border-inline-start-color: var(--ouro); }
+.num-verso { color: var(--ouro); font-family: Nunito, sans-serif; font-weight: 800; font-size: .75em; text-decoration: none; vertical-align: super; }
+.btn-refs { font: 700 .72rem Nunito, sans-serif; color: var(--suave); background: var(--fundo); border: 1px solid var(--linha); border-radius: 999px; padding: 0 8px; margin-inline-start: 4px; cursor: pointer; vertical-align: middle; }
+.btn-refs[aria-expanded="true"], .btn-refs:hover { color: var(--ouro); border-color: var(--ouro); }
+.refs-verso { margin: 0 0 12px; margin-inline-start: 22px; padding: 10px 14px; background: var(--fundo); border-radius: 10px; font-size: .88rem; line-height: 1.6; }
+.refs-verso ul { margin: 0; padding-inline-start: 18px; }
+.refs-verso li { margin-bottom: 4px; }
+.refs-verso a { color: var(--ouro); font-family: Nunito, sans-serif; font-weight: 700; text-decoration: none; }
+.marco-historia { display: inline-block; margin: 14px 0 6px; padding: 4px 12px; border-radius: 999px; background: var(--ouro); color: #fff; font: 700 .82rem Nunito, sans-serif; text-decoration: none; }
+.marco-historia:hover { filter: brightness(1.08); }
+.veja-tambem { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .9rem; }
+.rotulo-veja { color: var(--suave); font-weight: 700; }
+.chips { display: contents; }
+.chip-ref { padding: 2px 10px; border-radius: 999px; background: var(--fundo); border: 1px solid var(--linha); text-decoration: none; color: var(--tinta); font-size: .85rem; }
+.chip-ref:hover { border-color: var(--ouro); color: var(--ouro); }
+.abrir-leitor { display: inline-block; margin-top: 10px; color: var(--ouro); font-weight: 700; font-size: .88rem; text-decoration: none; }
+.abrir-leitor:hover { text-decoration: underline; }
+.leitor .navegacao-cap { margin: 12px 0 20px; }
+.leitor .credito-biblia { color: var(--suave); margin-bottom: 40px; }
+.acoes-cap { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.botao-leve { padding: 6px 14px; font-size: .88rem; }
+
 /* ---------- home ---------- */
 .hero { padding: 48px 0 24px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: center; }
 .hero h1 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
@@ -196,5 +232,6 @@ cite abbr { text-decoration: none; border-bottom: 1px dotted; cursor: help; }
   .seletor-idioma > span { display: none; }
   .topo nav a.esconder-mobile { display: none; }
   .narracao { padding: 16px 18px; font-size: 1.04rem; }
+  .texto-leitor { padding: 16px 14px; font-size: 1rem; }
   .pontos { order: 3; width: 100%; justify-content: center; }
 }

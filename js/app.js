@@ -45,7 +45,7 @@
   }
   I18N.aplicarDocumento();
   const rodapeBiblia = document.getElementById('credito-biblia');
-  const atualizarRodape = () => { if (rodapeBiblia) rodapeBiblia.innerHTML = `<span${attrsUI()}>${esc(t('rodape.biblia'))}</span> ${creditoHtml(siglaBiblia())}`; };
+  const atualizarRodape = () => { if (rodapeBiblia) rodapeBiblia.innerHTML = `<span${attrsUI()}>${esc(t('rodape.biblia'))}</span> ${creditoHtml(siglaBiblia())}<br>${creditoRefsHtml()}`; };
 
   /* ---------- carregamento preguiçoso do conteúdo (idioma → original) ---------- */
   const carregando = {};
@@ -87,6 +87,22 @@
     const info = TB.TRADUCOES[sigla];
     return `<blockquote${attrsIdioma(info.idioma)}>${corpo}</blockquote><cite${attrsIdioma(info.idioma)}>${esc(rotuloRef(livro, ref))} · <abbr title="${esc(TB.credito(sigla))}">${info.sigla}</abbr></cite>`;
   }
+
+  /* 'romanos 4:3-6' (ou '4:3-6' + livro padrão) -> 'Romanos 4:3-6' no idioma da interface */
+  function rotuloRefCompleta(ref, livroPadrao) {
+    const m = String(ref).match(/^([0-9]?[a-zà-ú]+)\s+(.+)$/i);
+    const livro = porId[m ? m[1].toLowerCase() : livroPadrao];
+    return `${livro ? nome(livro) : ''} ${m ? m[2] : ref}`.trim();
+  }
+  /* link para o leitor da Bíblia, no capítulo inicial do trecho, com os versículos destacados */
+  function linkLeitor(ref, livroPadrao) {
+    const tr = (TB.interpretar(ref, livroPadrao) || [])[0];
+    if (!tr) return '#/biblia';
+    const r = String(ref).replace(/^([0-9]?[a-zà-ú]+)\s+/i, '');
+    return `#/biblia/${tr.livro}/${tr.c1}?r=${encodeURIComponent(r)}`;
+  }
+  /* chips "Veja também" para uma lista de referências */
+  const chipsRefs = (refs, livroPadrao) => refs.map((r) => `<a class="chip-ref" href="${linkLeitor(r, livroPadrao)}">${esc(rotuloRefCompleta(r, livroPadrao))}</a>`).join('');
 
   const avisoTraducao = (idiomaConteudo) => idiomaConteudo && idiomaConteudo !== I18N.atual
     ? `<div class="aviso" lang="${I18N.atual}">🌐 ${esc(t('cap.semTraducao', { idioma: I18N.info().nome, original: I18N.nomeIdioma(idiomaConteudo) }))}</div>` : '';
@@ -239,7 +255,7 @@
 
   let limparCapitulo = null;
 
-  async function viewCapitulo(id, c) {
+  async function viewCapitulo(id, c, params = new URLSearchParams()) {
     const l = porId[id];
     if (!l || !(c >= 1 && c <= l.capitulos)) return viewNaoEncontrado();
     const { dados, idioma } = await carregarConteudo(id);
@@ -276,7 +292,10 @@
       ${avisoTraducao(idioma)}
       <div class="capitulo-topo">
         <div><div class="ref">${esc(t('cap.ref', { livro: nome(l), n: I18N.numero(c) }))}</div><h1${lang}>${esc(cap.titulo)}</h1></div>
-        <label class="marcar"><input type="checkbox" id="lido" ${foiLido(id, c) ? 'checked' : ''}> ${t('cap.jaLi')}</label>
+        <div class="acoes-cap">
+          <a class="botao botao-leve" href="#/biblia/${id}/${c}">📖 ${esc(t('leitor.lerCap', { ref: `${nome(l)} ${c}` }))}</a>
+          <label class="marcar"><input type="checkbox" id="lido" ${foiLido(id, c) ? 'checked' : ''}> ${t('cap.jaLi')}</label>
+        </div>
       </div>
       <div class="palco" dir="ltr"${lang}>
         ${cenas.map((cn, i) => `<div class="quadro ${i === 0 ? 'ativo' : ''}" data-i="${i}" aria-hidden="${i !== 0}">${i === 0 ? ILUSTRA.render(cn.cena, { titulo: tituloCena(cn) }) : ''}</div>`).join('')}
@@ -321,13 +340,25 @@
       const cn = cenas[atual];
       narr.innerHTML = `<p>${esc(cn.texto)}</p>` + (cn.ref ? `<details class="texto-biblico"${attrsUI()}>
           <summary>📖 ${esc(t('cap.lerBiblia', { ref: rotuloRef(l, cn.ref) }))}</summary>
-          <div class="versiculos"><p class="carregando-biblia">${esc(t('biblia.carregando'))}</p></div></details>` : '');
+          <div class="versiculos"><p class="carregando-biblia">${esc(t('biblia.carregando'))}</p></div></details>
+          <div class="veja-tambem"${attrsUI()} hidden><span class="rotulo-veja">${t('cap.vejaTambem')}</span><span class="chips"></span></div>` : '');
       const det = narr.querySelector('details');
       if (det) det.addEventListener('toggle', async () => {
         if (!det.open || det.dataset.ok) return;
         det.dataset.ok = '1';
-        det.querySelector('.versiculos').innerHTML = await htmlVersiculos(l, cn.ref);
+        det.querySelector('.versiculos').innerHTML = await htmlVersiculos(l, cn.ref) +
+          `<a class="abrir-leitor"${attrsUI()} href="${linkLeitor(cn.ref, id)}">${esc(t('leitor.abrir'))}</a>`;
       });
+      if (cn.ref) {
+        const veja = narr.querySelector('.veja-tambem'), cenaAtual = atual;
+        REFERENCIAS.doTrecho(cn.ref, id, 6).then((auto) => {
+          if (!veja.isConnected || cenaAtual !== atual) return;
+          const refs = [...(cn.veja || []), ...auto.filter((r) => !(cn.veja || []).includes(r))].slice(0, 6);
+          if (!refs.length) return;
+          veja.querySelector('.chips').innerHTML = chipsRefs(refs, id);
+          veja.hidden = false;
+        });
+      }
       contador.textContent = t('cap.cena', { n: I18N.numero(atual + 1), total: I18N.numero(cenas.length) });
       btnAnt.disabled = atual === 0;
       btnProx.textContent = atual === cenas.length - 1 ? t(proximo ? 'cap.proxCap' : 'cap.fim') : t('cap.proxima');
@@ -372,7 +403,120 @@
       if (Math.abs(dx) > 50) { pararContar(); dx < 0 ? avancar() : mostrar(atual - 1); }
     });
     limparCapitulo = () => { document.removeEventListener('keydown', teclas); pararContar(); };
-    mostrar(0);
+    const cenaInicial = parseInt(params.get('cena'), 10);
+    mostrar(cenaInicial >= 1 ? cenaInicial - 1 : 0);
+  }
+
+  /* ================= LEITOR DA BÍBLIA ================= */
+
+  /* mapa versículo -> cenas que o recontam, a partir do conteúdo ilustrado do livro */
+  function indiceHistorias(id, dados) {
+    const porVerso = {}; // 'c:v' -> [{cap, cena, titulo, inicio}]
+    for (const [n, cap] of Object.entries(dados?.capitulos || {})) {
+      cap.cenas.forEach((cn, i) => {
+        if (!cn.ref) return;
+        TB.expandir(cn.ref, id).filter((x) => x.livro === id).forEach((x, k) => {
+          (porVerso[`${x.c}:${x.v}`] = porVerso[`${x.c}:${x.v}`] || []).push({ cap: +n, cena: i + 1, titulo: cap.titulo, inicio: k === 0 });
+        });
+      });
+    }
+    return porVerso;
+  }
+
+  function viewBiblia() {
+    const sigla = siglaBiblia(), tr = TB.TRADUCOES[sigla];
+    const bloco = (tst) => `<section class="testamento"><h2>${t(tst === 'AT' ? 'at.titulo' : 'nt.titulo')}</h2>
+      ${Object.entries(SECOES).filter(([, s]) => s.testamento === tst).map(([sid, s]) => `<div class="secao" style="--cor:${s.cor}"><h3>${esc(t('secao.' + sid))}</h3>
+        <div class="grade-biblia">${livros.filter((l) => l.secao === sid).map((l) =>
+          `<a class="livro-biblia" href="#/biblia/${l.id}" style="--cor:${s.cor}">${esc(nome(l))}${l.disponivel ? ' <span title="' + esc(t('leitor.temHistoria')) + '">🎬</span>' : ''}</a>`).join('')}</div></div>`).join('')}
+      </section>`;
+    app.innerHTML = `<div class="container">
+      ${migalhas({ href: '#/', txt: t('migalha.inicio') }, { txt: t('leitor.titulo') })}
+      <h1>${t('leitor.titulo')}</h1>
+      <p class="intro-leitor">${esc(t('leitor.sub', { versao: `${tr.nome} (${tr.sigla})` }))}</p>
+      ${bloco('AT')}${bloco('NT')}
+    </div>`;
+  }
+
+  async function viewBibliaLivro(id) {
+    const l = porId[id];
+    if (!l) return viewNaoEncontrado();
+    const { dados } = await carregarConteudo(id);
+    app.innerHTML = `<div class="container">
+      ${migalhas({ href: '#/', txt: t('migalha.inicio') }, { href: '#/biblia', txt: t('leitor.titulo') }, { txt: nome(l) })}
+      <h1>${esc(nome(l))}</h1>
+      ${l.disponivel ? `<p><a class="botao" href="#/livro/${id}">🎬 ${esc(t('leitor.historiaLivro', { livro: nome(l) }))}</a></p>` : ''}
+      <div class="grade-num">${Array.from({ length: l.capitulos }, (_, i) => i + 1).map((c) =>
+        `<a href="#/biblia/${id}/${c}" class="${dados?.capitulos?.[c] ? 'com-historia' : ''}" title="${dados?.capitulos?.[c] ? esc(dados.capitulos[c].titulo) : ''}">${c}</a>`).join('')}</div>
+    </div>`;
+  }
+
+  async function viewBibliaCapitulo(id, c, params) {
+    const l = porId[id];
+    if (!l || !(c >= 1 && c <= l.capitulos)) return viewNaoEncontrado();
+    const sigla = siglaBiblia(), tr = TB.TRADUCOES[sigla];
+    const [caps, refsLivro, { dados }] = await Promise.all([TB.carregarLivro(sigla, id), REFERENCIAS.carregar(id), carregarConteudo(id)]);
+    if (!caps) { app.innerHTML = `<div class="container vazio-msg"><p>${esc(t('biblia.erro'))}</p></div>`; return; }
+    const historias = indiceHistorias(id, dados);
+    const destaque = new Set();
+    const r = params.get('r');
+    // aceita '22:9-12' e também a forma curta '9-12' (versículos do capítulo aberto)
+    if (r) TB.expandir(/^\d+(-\d+)?$/.test(r) ? `${c}:${r}` : r, id).forEach((x) => { if (x.livro === id && x.c === c) destaque.add(x.v); });
+    const vizinho = (d) => {
+      if (c + d >= 1 && c + d <= l.capitulos) return { id, c: c + d, l };
+      const p = livros[livros.indexOf(l) + d];
+      return p ? { id: p.id, c: d < 0 ? p.capitulos : 1, l: p } : null;
+    };
+    const ant = vizinho(-1), prox = vizinho(1);
+    const nav = `<div class="navegacao-cap">
+      ${ant ? `<a class="botao" href="#/biblia/${ant.id}/${ant.c}">← ${esc(nome(ant.l))} ${ant.c}</a>` : '<span></span>'}
+      ${prox ? `<a class="botao" href="#/biblia/${prox.id}/${prox.c}">${esc(nome(prox.l))} ${prox.c} →</a>` : ''}
+    </div>`;
+    const temHistoria = !!dados?.capitulos?.[c];
+    const versos = caps[c - 1].map((texto, i) => {
+      const v = i + 1, hs = historias[`${c}:${v}`] || [], refs = (refsLivro || {})[`${c}:${v}`] || [];
+      const marcos = hs.filter((h) => h.inicio).map((h) =>
+        `<a class="marco-historia"${attrsUI()} href="#/livro/${id}/${h.cap}?cena=${h.cena}">${esc(t('leitor.historiaCena', { titulo: h.titulo, n: h.cena }))}</a>`).join('');
+      return `${marcos}<p class="verso${destaque.has(v) ? ' destaque' : ''}${hs.length ? ' com-historia' : ''}" id="v${v}">
+          <a class="num-verso" href="#/biblia/${id}/${c}?r=${c}:${v}">${v}</a> ${TB.formatar(texto)}
+          ${refs.length ? `<button class="btn-refs" data-v="${v}" aria-expanded="false" title="${esc(t('leitor.refs'))}"${attrsUI()}>🔗 ${refs.length}</button>` : ''}
+        </p><div class="refs-verso" id="refs-${v}" hidden></div>`;
+    }).join('');
+    app.innerHTML = `<div class="container leitor">
+      ${migalhas({ href: '#/', txt: t('migalha.inicio') }, { href: '#/biblia', txt: t('leitor.titulo') }, { href: `#/biblia/${id}`, txt: nome(l) }, { txt: t('migalha.capitulo', { n: I18N.numero(c) }) })}
+      <div class="capitulo-topo">
+        <h1>${esc(nome(l))} ${c} <small class="sigla">${tr.sigla}</small></h1>
+        ${temHistoria ? `<a class="botao primario" href="#/livro/${id}/${c}">🎬 ${esc(t('leitor.historiaCap'))}</a>` : ''}
+      </div>
+      ${nav}
+      <div class="texto-leitor"${attrsIdioma(tr.idioma)}>${versos}</div>
+      ${nav}
+      <p class="credito-biblia">${creditoHtml(sigla)}<br>${creditoRefsHtml()}</p>
+    </div>`;
+
+    app.querySelectorAll('.btn-refs').forEach((b) => b.addEventListener('click', async () => {
+      const v = +b.dataset.v, caixa = app.querySelector('#refs-' + v);
+      const abrir = caixa.hidden;
+      caixa.hidden = !abrir; b.setAttribute('aria-expanded', String(abrir));
+      if (!abrir || caixa.dataset.ok) return;
+      caixa.dataset.ok = '1';
+      caixa.innerHTML = `<p class="carregando-biblia">${esc(t('biblia.carregando'))}</p>`;
+      const refs = refsLivro[`${c}:${v}`] || [];
+      const textos = await Promise.all(refs.map((r) => TB.obter(r, id, sigla)));
+      caixa.innerHTML = `<ul${attrsIdioma(tr.idioma)}>${refs.map((r, k) => {
+        const txt = textos[k].map((x) => x.texto).join(' ');
+        const curto = txt.length > 180 ? txt.slice(0, 177).replace(/\s+\S*$/, '') + '…' : txt;
+        return `<li><a href="${linkLeitor(r, id)}">${esc(rotuloRefCompleta(r, id))}</a> ${TB.formatar(curto)}</li>`;
+      }).join('')}</ul>`;
+    }));
+    const primeiro = app.querySelector('.verso.destaque');
+    if (primeiro) primeiro.scrollIntoView({ block: 'center' });
+  }
+
+  function creditoRefsHtml() {
+    const r = REFERENCIAS.CREDITO;
+    return `${esc(t('rodape.refs'))} <a href="${r.url}" target="_blank" rel="noopener">${esc(r.nome)}</a>, ` +
+      `<a href="${r.urlLicenca}" target="_blank" rel="noopener">${esc(r.licenca)}</a> (${esc(r.base)}).`;
   }
 
   function creditoHtml(sigla = TB.PADRAO) {
@@ -394,7 +538,7 @@
       <p>${t('sobre.p3')}</p>
       <h3>${t('sobre.h3')}</h3>
       <p>${esc(t('sobre.p4', { versao: `${TB.TRADUCOES[TB.PADRAO].nome} (${TB.TRADUCOES[TB.PADRAO].sigla})` }))}</p>
-      <p class="credito-biblia"${attrsIdioma('pt-BR')}>${creditoHtml()}</p>
+      <p class="credito-biblia"${attrsIdioma('pt-BR')}>${creditoHtml()}<br>${creditoRefsHtml()}</p>
       <p><a class="botao primario" href="#/livro/genesis/1">${esc(t('home.comecar', { livro: nome(porId.genesis) }))}</a></p>
     </div>`;
   }
@@ -406,15 +550,22 @@
   /* ---------- roteador ---------- */
   async function rotear() {
     if (limparCapitulo) { limparCapitulo(); limparCapitulo = null; }
-    const partes = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+    const [caminho, consulta] = location.hash.replace(/^#\/?/, '').split('?');
+    const partes = caminho.split('/').filter(Boolean);
+    const params = new URLSearchParams(consulta || '');
     window.scrollTo({ top: 0 });
     if (!partes.length) viewInicio();
-    else if (partes[0] === 'livro' && partes[1] && partes[2]) await viewCapitulo(partes[1], parseInt(partes[2], 10));
+    else if (partes[0] === 'livro' && partes[1] && partes[2]) await viewCapitulo(partes[1], parseInt(partes[2], 10), params);
     else if (partes[0] === 'livro' && partes[1]) await viewLivro(partes[1]);
+    else if (partes[0] === 'biblia' && partes[1] && partes[2]) await viewBibliaCapitulo(partes[1], parseInt(partes[2], 10), params);
+    else if (partes[0] === 'biblia' && partes[1]) await viewBibliaLivro(partes[1]);
+    else if (partes[0] === 'biblia') viewBiblia();
     else if (partes[0] === 'sobre') viewSobre();
     else viewNaoEncontrado();
+    document.querySelectorAll('.topo nav a').forEach((a) => a.classList.toggle('ativo', a.getAttribute('href') === '#/' + (partes[0] === 'biblia' ? 'biblia' : partes[0] === 'sobre' ? 'sobre' : '')));
     const l = porId[partes[1]];
-    document.title = l ? `${nome(l)}${partes[2] ? ' ' + partes[2] : ''} · In Lumen` : t('site.titulo');
+    const prefixo = partes[0] === 'biblia' ? t('leitor.titulo') + ': ' : '';
+    document.title = l ? `${prefixo}${nome(l)}${partes[2] ? ' ' + partes[2] : ''} · In Lumen` : (partes[0] === 'biblia' ? `${t('leitor.titulo')} · In Lumen` : t('site.titulo'));
   }
   window.addEventListener('hashchange', rotear);
   atualizarRodape();
