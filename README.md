@@ -19,6 +19,24 @@ python3 -m http.server 8000
 # abra http://localhost:8000
 ```
 
+## Publicação (GitHub Pages)
+
+O workflow `.github/workflows/pages.yml` automatiza tudo:
+
+| Evento | O que acontece |
+|---|---|
+| Pull request para `main` | Roda `scripts/validar.js`. O PR mostra ✅ ou ❌. |
+| Merge na `main` | Valida de novo e, se passar, **publica automaticamente** no GitHub Pages. |
+| Actions → *Validar e publicar* → *Run workflow* | Publica a `main` manualmente. |
+
+Para validar localmente antes de abrir um PR:
+
+```bash
+node scripts/validar.js
+```
+
+O validador confere a sintaxe dos JS, o catálogo (66 livros e 1189 capítulos), os dicionários de i18n (chaves, variáveis e plurais) e todo o conteúdo registrado: capítulos, cenas, fundos e elementos de ilustração.
+
 ## Estrutura
 
 ```
