@@ -53,6 +53,16 @@ node scripts/validar.js
 
 O validador confere a sintaxe dos JS, o catálogo (66 livros e 1189 capítulos), os dicionários de i18n (chaves, variáveis e plurais), a integridade do texto bíblico (31.102 versículos) e todo o conteúdo registrado: capítulos, cenas, ilustrações, referências bíblicas, cobertura dos versículos e grafia dos nomes.
 
+## Skills do Claude Code
+
+O repositório traz skills em `.claude/skills/` com os roteiros dos trabalhos recorrentes. O Claude Code as carrega automaticamente neste projeto:
+
+| Skill | Para quê |
+|---|---|
+| `escrever-capitulos` | Criar a história ilustrada de capítulos ou livros, fiel à BLIVRE, com cobertura total dos versículos |
+| `traduzir-conteudo` | Traduzir histórias, interface e nomes dos livros para outros idiomas |
+| `publicar` | Validar → PR → CI → merge → deploy → conferir o site, incluindo as falhas conhecidas do deploy |
+
 ## Estrutura
 
 ```
