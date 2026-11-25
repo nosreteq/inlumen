@@ -49,6 +49,22 @@ button { font: inherit; }
 :lang(zh), :lang(ja) { line-break: strict; }
 [dir="rtl"] body { font-family: "Noto Naskh Arabic", Tahoma, Nunito, system-ui, sans-serif; }
 
+.texto-biblico { margin-top: 12px; font-size: .95rem; }
+.texto-biblico summary { cursor: pointer; color: var(--ouro); font-weight: 700; list-style: none; display: inline-flex; gap: 6px; }
+.texto-biblico summary::-webkit-details-marker { display: none; }
+.texto-biblico summary::after { content: "▾"; transition: transform .2s; }
+.texto-biblico[open] summary::after { transform: rotate(180deg); }
+.texto-biblico .versiculos { margin-top: 10px; padding: 14px 18px; border-inline-start: 4px solid var(--ouro); background: var(--fundo); border-radius: 8px; }
+blockquote { margin: 0; font-family: Merriweather, Georgia, serif; font-size: .98rem; line-height: 1.75; }
+blockquote sup { color: var(--ouro); font-family: Nunito, sans-serif; font-weight: 800; font-size: .68em; margin-inline-end: 2px; }
+.acrescimo { color: var(--suave); }
+cite { display: block; margin-top: 8px; font-style: normal; font-size: .82rem; color: var(--suave); }
+cite abbr { text-decoration: none; border-bottom: 1px dotted; cursor: help; }
+.bloco-versiculo blockquote { font-size: 1.02rem; }
+.carregando-biblia, .erro-biblia { color: var(--suave); font-style: italic; margin: 0; }
+.credito-biblia { font-size: .8rem; margin-top: 8px; }
+.credito-biblia a { color: inherit; }
+
 /* ---------- home ---------- */
 .hero { padding: 48px 0 24px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: center; }
 .hero h1 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
@@ -113,7 +129,7 @@ button { font: inherit; }
 .palco svg { width: 100%; height: 100%; display: block; }
 .palco .contador { position: absolute; top: 12px; inset-inline-end: 12px; background: rgba(0, 0, 0, .45); color: #fff; font-size: .8rem; font-weight: 700; padding: 4px 10px; border-radius: 99px; }
 .narracao { background: var(--papel); border: 1px solid var(--linha); border-radius: var(--raio); padding: 20px 24px; margin-top: 14px; min-height: 120px; font-size: 1.12rem; }
-.narracao p { margin: 0; animation: aparecer .6s ease; }
+.narracao > p { margin: 0; animation: aparecer .6s ease; }
 .narracao .ref-cena { display: block; margin-top: 10px; font-size: .82rem; color: var(--suave); }
 .controles { display: flex; align-items: center; gap: 10px; margin: 14px 0 28px; flex-wrap: wrap; }
 .pontos { display: flex; gap: 6px; margin: 0 auto; }
