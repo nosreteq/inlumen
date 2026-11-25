@@ -34,7 +34,7 @@ O workflow `.github/workflows/pages.yml` valida todo PR para a `main` e, após o
 
 6. **Merge**, somente se o CI passou e o usuário pediu: `mcp__github__merge_pull_request` com `merge_method: "merge"` e `expectedHeadSha` do último commit.
 
-7. **Acompanhar o deploy:** a execução `push` na `main` tem os jobs `validar` e `publicar`. Liste os jobs com `list_workflow_jobs`.
+7. **Acompanhar o deploy:** a execução `push` na `main` tem os jobs `validar` → `empacotar` (upload do artefato) → `publicar` (deploy). Liste os jobs com `list_workflow_jobs`.
 
 8. **Conferir o site:** confirme que os arquivos novos respondem com 200 (pode levar 1 a 2 minutos após o deploy):
    ```bash

@@ -30,22 +30,28 @@ jobs:
       - name: Validar portal (sintaxe, i18n, conteúdo e ilustrações)
         run: node scripts/validar.js
 
-  publicar:
+  # Build e deploy em jobs separados (estrutura oficial do GitHub Pages): no mesmo job, o
+  # deploy-pages consultava o artefato logo após o upload e às vezes não o encontrava.
+  empacotar:
     needs: validar
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
           path: .
+
+  publicar:
+    needs: empacotar
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v5
