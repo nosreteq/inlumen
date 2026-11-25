@@ -19,6 +19,8 @@ Todo o projeto usa como base a **Bíblia Livre**, uma atualização da traduçã
 
 Procedência, versão, checksum e instruções de atualização: [`biblia/blivre/LEIAME.md`](biblia/blivre/LEIAME.md).
 
+Próximos passos combinados: [`PENDENCIAS.md`](PENDENCIAS.md).
+
 ## Status do conteúdo
 
 | Livro | Capítulos | Idiomas do conteúdo |
