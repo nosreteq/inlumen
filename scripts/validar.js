@@ -124,7 +124,7 @@ if (!I18N || !BIBLIA || !ILUSTRA || !CONTEUDO || !TB || !VERSICULOS) {
 
   /* ---------- 3. conteúdo ---------- */
   // palavras com inicial maiúscula em "personagens" que não são nomes próprios
-  const COMUNS = new Set('O A Os As Um Uma Deus Senhor Anjo Anjos Três Dois Duas Doze Todo Poderoso Rei Família Filhos Filhas Irmãos Esposa Homem Mulher Primeiro Primeira Visitantes Construtores Chefes Descendentes Animais Copeiro Padeiro Faraó'.split(' '));
+  const COMUNS = new Set('O A Os As Um Uma Sua Seu Estrangeiros Deus Senhor Anjo Anjos Três Dois Duas Doze Todo Poderoso Rei Família Filhos Filhas Irmãos Esposa Homem Mulher Primeiro Primeira Visitantes Construtores Chefes Descendentes Animais Copeiro Padeiro Faraó'.split(' '));
   const elementos = new Set(ILUSTRA.elementos);
   const fundos = new Set(ILUSTRA.fundos);
   let nCaps = 0, nCenas = 0;
@@ -161,11 +161,11 @@ if (!I18N || !BIBLIA || !ILUSTRA || !CONTEUDO || !TB || !VERSICULOS) {
           if (!cn.ref) { avisos.push(`${onde}: cena sem referência bíblica`); continue; }
           const e = TB.verificar(cn.ref, l.id, VERSICULOS);
           if (e) erro(`${onde} cena: ${e}`);
+          else TB.expandir(cn.ref, l.id, VERSICULOS).forEach((x) => { if (x.livro === l.id) (cobertura[x.c] = cobertura[x.c] || new Set()).add(x.v); });
           if (cn.veja != null) {
             if (!Array.isArray(cn.veja)) erro(`${onde}: "veja" deve ser uma lista de referências`);
             else cn.veja.forEach((r) => { const ev = TB.verificar(r, l.id, VERSICULOS); if (ev) erro(`${onde} veja: ${ev}`); });
           }
-          else TB.expandir(cn.ref, l.id, VERSICULOS).forEach((x) => { if (x.livro === l.id) (cobertura[x.c] = cobertura[x.c] || new Set()).add(x.v); });
         }
         /* nomes próprios dos personagens devem existir no texto bíblico (mesma grafia) */
         if (textoLivro) {

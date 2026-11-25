@@ -199,7 +199,7 @@ cite abbr { text-decoration: none; border-bottom: 1px dotted; cursor: help; }
 .a-andar { animation: andar 5s ease-in-out infinite; }
 .a-tremer { animation: tremer .35s ease-in-out infinite alternate; transform-origin: center bottom !important; }
 .a-piscar { animation: piscar 2.4s ease-in-out infinite; }
-.a-cair-lento { animation: cair-lento 3s ease-in both; }
+.a-cair-lento { animation: cair-lento 3.5s ease-in infinite; }
 .a-subir { animation: subir 5s ease-in-out infinite; }
 
 @keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
@@ -215,6 +215,7 @@ cite abbr { text-decoration: none; border-bottom: 1px dotted; cursor: help; }
 @keyframes andar { 0%, 100% { transform: translateX(-20px); } 25% { transform: translate(-10px, -3px); } 50% { transform: translateX(20px); } 75% { transform: translate(10px, -3px); } }
 @keyframes tremer { from { transform: scale(1, 1) skewX(-2deg); } to { transform: scale(1.05, 1.1) skewX(2deg); } }
 @keyframes piscar { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+@keyframes cair-lento { 0% { transform: translateY(-40px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(80px); opacity: 0; } }
 @keyframes subir { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(-40px); opacity: .7; } }
 
 @media (prefers-reduced-motion: reduce) {

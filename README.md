@@ -46,7 +46,8 @@ O item **Bíblia** do menu abre o texto completo da BLIVRE dentro do portal:
 | Livro | Capítulos | Idiomas do conteúdo |
 |---|---|---|
 | Gênesis | 50/50 (154 cenas) | pt-BR |
-| Demais 65 livros | catálogo pronto, conteúdo pendente | — |
+| Êxodo | 40/40 (98 cenas) | pt-BR |
+| Demais 64 livros | catálogo pronto, conteúdo pendente | — |
 
 ## Rodando localmente
 
@@ -97,6 +98,7 @@ biblia/referencias/        referências cruzadas (OpenBible.info): fonte + um ar
 scripts/importar-biblia.js importa uma tradução no formato VPL (eBible.org)
 scripts/importar-referencias.js importa as referências cruzadas (OpenBible.info)
 scripts/validar.js         validação usada no CI
+scripts/conferir-numeros.js revisão: números das histórias × texto da BLIVRE
 js/ilustracoes.js          motor de ilustrações (fundos + ~50 elementos SVG animados)
 js/app.js                  rotas (#/, #/livro/<id>, #/livro/<id>/<cap>, #/sobre) e telas
 conteudo/<idioma>/<id>.js  conteúdo de cada livro, por idioma (carregado sob demanda)
@@ -162,10 +164,10 @@ C[1] = {
 As cenas são compostas num palco de **800×450**, com o chão em y≈360. Os personagens têm os pés no ponto `(x, y)`.
 
 - **Fundos:** `trevas, aurora, ceu, dia, jardim, noite, deserto, por-do-sol, tempestade, mar, egito, interior, prisao, montanha, fogo, agua`
-- **Elementos:** `pessoa, crianca, anjo, luz, sol, lua, estrelas, nuvem, chuva, agua, rio, peixe, passaro, pomba, arvore, palmeira, flores, trigo, feixe, montanha, colina, serpente, ovelha, leao, camelo, vaca, arca, arco-iris, torre, tenda, altar, fogo, cidade, piramide, poco, escada, palacio, grades, coroa, tunica, saco, taca, pedras, espada-fogo, tocha, trono, cesto, videira, mesa, carroca, moedas, caverna, bebe, coracao, sonho, fala, rotulo`
+- **Elementos:** `pessoa, crianca, anjo, luz, sol, lua, estrelas, nuvem, chuva, agua, rio, peixe, passaro, pomba, arvore, palmeira, flores, trigo, feixe, montanha, colina, serpente, ovelha, leao, camelo, vaca, arca, arco-iris, torre, tenda, altar, fogo, cidade, piramide, poco, escada, palacio, grades, coroa, tunica, saco, taca, pedras, espada-fogo, tocha, trono, cesto, videira, mesa, carroca, moedas, caverna, bebe, coracao, sonho, fala, rotulo`, e os de Êxodo: `sarca, cestinho, tijolos, ra, moscas, gafanhoto, casa` (`sangue`, `luz`), `mar-aberto, coluna` (`fogo`), `mana, rocha` (`agua`), `tabuas` (`quebradas`), `tabernaculo, arca-alianca, candelabro`
 - **Atributos comuns:** `x, y, s` (escala), `anim, atraso, espelho, opacidade`
 - **Animações:** `flutuar, brilhar, balancar, surgir, cair, nadar, voar, pulsar, girar, andar, tremer, piscar, subir`
-- **`pessoa`:** `cor, pele, cabelo, barba, longo, veu, velho, cajado, coroa, halo, listras, triste, bracos` (`baixo|cima|aberto|frente|orando|rosto`), `pose` (`ajoelhado|deitado`)
+- **`pessoa`:** `cor, pele, cabelo, barba, longo, veu, velho, cajado, coroa, halo, listras, triste, bracos` (`baixo|cima|aberto|frente|orando|rosto`), `pose` (`ajoelhado|deitado`), `peitoral` (sumo sacerdote), `brilho` (rosto resplandecente)
 
 **Diretriz:** Deus não é desenhado em forma humana; sua presença é representada pelo elemento `luz`.
 
